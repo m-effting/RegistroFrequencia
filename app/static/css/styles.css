@@ -1,0 +1,149 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 0;
+    text-align: center;
+    background-color: #f4f4f4;
+}
+
+h1 {
+    font-size: 30px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+form {
+    margin-bottom: 30px;
+}
+
+input, button {
+    padding: 12px;
+    margin: 10px 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    width: 250px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: center;
+    font-size: 16px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 30px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    border-radius: 50%;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background-color: #4CAF50; /* Verde para "Presente" */
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
+
+input:not(:checked) + .slider {
+    background-color: #FF6347; /* Vermelho para "Falta" */
+}
+
+input:not(:checked) + .slider:before {
+    transform: translateX(0);
+}
+
+.editable {
+    min-width: 150px;
+    max-width: 250px;
+    height: auto;
+    background-color: #f9f9f9;
+    padding: 5px;
+    word-wrap: break-word;
+}
+
+.editable:focus {
+    outline: none;
+    background-color: #eaeaea;
+}
+
+.falta-justificada {
+    display: none; /* O botão começa invisível */
+    background-color: #FFD700; /* Amarelo para falta justificada */
+    color: black;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.falta-justificada:hover {
+    opacity: 0.8;
+}
+
+input[type="file"] {
+    width: 100%; /* Faz o botão ocupar toda a largura do contêiner */
+    max-width: 300px; /* Define um tamanho máximo para não ficar exagerado */
+    padding: 5px; /* Adiciona um pequeno espaçamento interno */
+    font-size: 14px; /* Ajusta o tamanho da fonte para melhor visibilidade */
+    white-space: nowrap; /* Evita quebra de linha */
+    overflow: hidden; /* Impede que o texto ultrapasse os limites do botão */
+    text-overflow: ellipsis; /* Adiciona "..." se o texto for muito longo */
+}

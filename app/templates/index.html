@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Presença</title>
+    
+    <!-- Referência ao manifesto para PWA -->
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    
+    <!-- Referência ao ícone da aplicação -->
+    <link rel="icon" href="{{ url_for('static', filename='images/icon-192x192.png') }}" type="image/png" sizes="192x192">
+    
+    <!-- Link para o CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h1>Registro de Presença</h1>
+
+    <!-- Formulário de Adição de Aluno -->
+    <form id="formAdicionarAluno">
+        <input type="text" id="escola" name="escola" placeholder="Nome da Escola" required>
+        <input type="text" id="turma" name="turma" placeholder="Turma" required>
+        <input type="text" id="aluno" name="aluno" placeholder="Nome do Aluno" required>
+        <button type="submit">Adicionar Aluno</button>
+    </form>
+
+    <hr>
+
+    <!-- Tabela de Presença -->
+    <table>
+        <tr>
+            <th>Nome</th>
+            <th>Presença</th>
+            <th>Observação</th>
+        </tr>
+        {% for chave, alunos in chamadas.items() %}
+            {% for aluno in alunos %}
+                <tr>
+                    <td>{{ aluno.nome }}</td>
+                    <td>
+                        <label class="switch">
+                            <input type="checkbox" class="toggle-presenca" checked data-nome="{{ aluno.nome }}">
+                            <span class="slider"></span>
+                        </label>
+                        <button class="falta-justificada" style="display:none;" data-nome="{{ aluno.nome }}">Falta Justificada</button>
+                    </td>
+                    <td class="editable" contenteditable="true" data-nome="{{ aluno.nome }}">{{ aluno.observacao }}</td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+    </table>
+
+    <hr>
+
+    <!-- Importar Lista de Alunos -->
+    <form action="{{ url_for('importar_chamada') }}" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".csv">
+        <button type="submit">Importar Chamada</button>
+    </form>
+    
+    <button id="btnSalvarChamada">Salvar Chamada</button>
+
+    <!-- Script do App -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+    <!-- Registro do Service Worker -->
+    <script src="{{ url_for('static', filename='js/service-worker.js') }}"></script>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+</body>
+</html>
