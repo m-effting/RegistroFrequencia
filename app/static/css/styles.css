@@ -1,21 +1,25 @@
+/* Define a fonte do corpo da página como Arial e margens e padding de 20px */
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
     padding: 0;
     text-align: center;
-    background-color: #f4f4f4;
+    background-color: #f4f4f4; /* Cor de fundo do corpo */
 }
 
+/* Define o estilo para o título h1 */
 h1 {
     font-size: 30px;
     margin-bottom: 20px;
-    color: #333;
+    color: #333; /* Cor do texto */
 }
 
+/* Formulário de adição de aluno */
 form {
     margin-bottom: 30px;
 }
 
+/* Define o estilo para os inputs e botões */
 input, button {
     padding: 12px;
     margin: 10px 5px;
@@ -26,17 +30,20 @@ input, button {
     width: 250px;
 }
 
+/* Define o estilo para os botões */
 button {
-    background-color: #4CAF50;
-    color: white;
+    background-color: #4CAF50; /* Cor de fundo do botão */
+    color: white; /* Cor do texto do botão */
     border: none;
-    cursor: pointer;
+    cursor: pointer; /* Altera o cursor para mãozinha */
 }
 
+/* Efeito de hover no botão */
 button:hover {
-    opacity: 0.8;
+    opacity: 0.8; /* Altera a opacidade quando o botão é hoverado */
 }
 
+/* Estilo para a tabela */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -44,6 +51,7 @@ table {
     background-color: #fff;
 }
 
+/* Estilo das células da tabela */
 th, td {
     border: 1px solid #ccc;
     padding: 12px;
@@ -51,10 +59,12 @@ th, td {
     font-size: 16px;
 }
 
+/* Estilo para o cabeçalho da tabela */
 th {
     background-color: #f2f2f2;
 }
 
+/* Estilo do switch para presença */
 .switch {
     position: relative;
     display: inline-block;
@@ -62,12 +72,14 @@ th {
     height: 30px;
 }
 
+/* Torna o input invisível dentro do switch */
 .switch input {
     opacity: 0;
     width: 0;
     height: 0;
 }
 
+/* Estilo do slider dentro do switch */
 .slider {
     position: absolute;
     cursor: pointer;
@@ -80,6 +92,7 @@ th {
     border-radius: 34px;
 }
 
+/* Estilo do botão redondo do slider */
 .slider:before {
     position: absolute;
     content: "";
@@ -92,39 +105,46 @@ th {
     transition: 0.4s;
 }
 
+/* Quando o switch está marcado (presente) */
 input:checked + .slider {
     background-color: #4CAF50; /* Verde para "Presente" */
 }
 
+/* Quando o switch está marcado, o botão do slider se move para a direita */
 input:checked + .slider:before {
     transform: translateX(20px);
 }
 
+/* Quando o switch não está marcado (falta) */
 input:not(:checked) + .slider {
     background-color: #FF6347; /* Vermelho para "Falta" */
 }
 
+/* Quando o switch não está marcado, o botão do slider volta à esquerda */
 input:not(:checked) + .slider:before {
     transform: translateX(0);
 }
 
+/* Estilo para células editáveis */
 .editable {
     min-width: 150px;
     max-width: 250px;
     height: auto;
     background-color: #f9f9f9;
     padding: 5px;
-    word-wrap: break-word;
+    word-wrap: break-word; /* Quebra de linha em palavras longas */
 }
 
+/* Estilo quando a célula editável está em foco */
 .editable:focus {
-    outline: none;
+    outline: none; /* Remove o contorno padrão */
     background-color: #eaeaea;
 }
 
+/* Estilo do botão de falta justificada */
 .falta-justificada {
     display: none; /* O botão começa invisível */
-    background-color: #FFD700; /* Amarelo para falta justificada */
+    background-color: #FFD700; /* Cor amarela para "Falta Justificada" */
     color: black;
     padding: 10px;
     margin-top: 10px;
@@ -134,16 +154,27 @@ input:not(:checked) + .slider:before {
     font-size: 14px;
 }
 
+/* Efeito de hover no botão de falta justificada */
 .falta-justificada:hover {
     opacity: 0.8;
 }
 
+/* Estilo para o input de arquivo */
 input[type="file"] {
-    width: 100%; /* Faz o botão ocupar toda a largura do contêiner */
-    max-width: 300px; /* Define um tamanho máximo para não ficar exagerado */
-    padding: 5px; /* Adiciona um pequeno espaçamento interno */
-    font-size: 14px; /* Ajusta o tamanho da fonte para melhor visibilidade */
+    width: 100%;
+    max-width: 300px;
+    padding: 5px;
+    font-size: 14px;
     white-space: nowrap; /* Evita quebra de linha */
     overflow: hidden; /* Impede que o texto ultrapasse os limites do botão */
     text-overflow: ellipsis; /* Adiciona "..." se o texto for muito longo */
+}
+
+/* Estilo para a data no canto superior direito */
+.data-hoje {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 18px;
+    font-weight: bold;
 }
