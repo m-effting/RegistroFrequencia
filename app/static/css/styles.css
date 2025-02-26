@@ -72,14 +72,12 @@ th {
     height: 30px;
 }
 
-/* Torna o input invisível dentro do switch */
 .switch input {
     opacity: 0;
     width: 0;
     height: 0;
 }
 
-/* Estilo do slider dentro do switch */
 .slider {
     position: absolute;
     cursor: pointer;
@@ -87,12 +85,11 @@ th {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
+    background-color: #FF6347; /* Vermelho para "Falta" */
     transition: 0.4s;
     border-radius: 34px;
 }
 
-/* Estilo do botão redondo do slider */
 .slider:before {
     position: absolute;
     content: "";
@@ -105,24 +102,12 @@ th {
     transition: 0.4s;
 }
 
-/* Quando o switch está marcado (presente) */
 input:checked + .slider {
     background-color: #4CAF50; /* Verde para "Presente" */
 }
 
-/* Quando o switch está marcado, o botão do slider se move para a direita */
 input:checked + .slider:before {
     transform: translateX(20px);
-}
-
-/* Quando o switch não está marcado (falta) */
-input:not(:checked) + .slider {
-    background-color: #FF6347; /* Vermelho para "Falta" */
-}
-
-/* Quando o switch não está marcado, o botão do slider volta à esquerda */
-input:not(:checked) + .slider:before {
-    transform: translateX(0);
 }
 
 /* Estilo para células editáveis */
@@ -143,15 +128,17 @@ input:not(:checked) + .slider:before {
 
 /* Estilo do botão de falta justificada */
 .falta-justificada {
-    display: none; /* O botão começa invisível */
     background-color: #FFD700; /* Cor amarela para "Falta Justificada" */
     color: black;
-    padding: 10px;
-    margin-top: 10px;
+    padding: 6px 12px;
+    margin-top: 5px;
     cursor: pointer;
     border: none;
     border-radius: 5px;
-    font-size: 14px;
+    font-size: 12px;
+    display: inline-block;
+    width: auto;
+    height: auto;
 }
 
 /* Efeito de hover no botão de falta justificada */

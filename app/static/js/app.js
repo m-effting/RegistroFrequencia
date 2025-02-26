@@ -42,9 +42,19 @@ document.addEventListener("DOMContentLoaded", function () {
             let status = this.checked ? "Presente" : "Falta"; // Determina o status com base no estado do switch
             alterarPresenca(nome, status); // Chama a função para alterar a presença do aluno
 
-            // Exibe ou oculta o botão "Falta Justificada" dependendo do status
+            // Exibe o botão "Falta Justificada" independentemente do status
             let faltaJustificadaButton = this.closest('td').querySelector('.falta-justificada');
-            faltaJustificadaButton.style.display = (status === "Falta") ? "inline-block" : "none"; // Exibe se for falta
+            faltaJustificadaButton.style.display = "inline-block"; // Sempre exibe o botão
+        });
+    });
+
+    // Clique no botão "FJ" para marcar como "Falta Justificada" e alterar o switch para falta
+    document.querySelectorAll(".falta-justificada").forEach(button => {
+        button.addEventListener("click", function () {
+            let nome = this.dataset.nome; // Recupera o nome do aluno
+            let toggle = document.querySelector(`input[data-nome="${nome}"]`); // Encontra o toggle correspondente
+            toggle.checked = false; // Marca como falta
+            alterarPresenca(nome, "Falta"); // Altera o status para "Falta"
         });
     });
 
@@ -87,11 +97,11 @@ function adicionarAluno(nome, turma) {
     switchContainer.appendChild(slider);
     colunaPresenca.appendChild(switchContainer); // Adiciona o switch na coluna de presença
 
-    // Cria o botão de falta justificada (inicialmente invisível)
+    // Cria o botão de falta justificada (sempre visível)
     let faltaJustificadaButton = document.createElement("button");
     faltaJustificadaButton.classList.add("falta-justificada");
-    faltaJustificadaButton.textContent = "Falta Justificada";
-    faltaJustificadaButton.style.display = "none"; // Começa invisível
+    faltaJustificadaButton.textContent = "FJ"; // Texto do botão
+    faltaJustificadaButton.dataset.nome = nome; // Atribui o nome ao botão para poder encontrar com o evento
     colunaPresenca.appendChild(faltaJustificadaButton); // Adiciona o botão na coluna de presença
 
     // Cria a célula de observação editável
