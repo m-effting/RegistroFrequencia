@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
+    <!-- Título da página -->
     <h1>Registro de Presença</h1>
 
     <!-- Formulário de Adição de Aluno -->
@@ -53,7 +54,7 @@
 
     <hr>
 
-    <!-- Importar Lista de Alunos -->
+    <!-- Formulário de Importação de Alunos -->
     <form action="{{ url_for('importar_chamada') }}" method="POST" enctype="multipart/form-data">
         <input type="file" name="file" accept=".csv">
         <button type="submit">Importar Chamada</button>
@@ -67,6 +68,7 @@
     <!-- Registro do Service Worker -->
     <script src="{{ url_for('static', filename='js/service-worker.js') }}"></script>
 
+    <!-- Exibição de mensagens flash -->
     {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
     {% for category, message in messages %}
