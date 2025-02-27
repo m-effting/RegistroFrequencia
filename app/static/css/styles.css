@@ -1,17 +1,21 @@
-/* Define a fonte do corpo da página como Arial e margens e padding de 20px */
+/* Define a fonte do corpo da página como 'Roboto' (uma fonte moderna) e margens e padding de 20px */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 20px;
     padding: 0;
     text-align: center;
-    background-color: #f4f4f4; /* Cor de fundo do corpo */
+    background-color: #f8f9fa; /* Cor de fundo mais suave */
 }
+
+/* Importação da fonte 'Roboto' do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
 /* Define o estilo para o título h1 */
 h1 {
-    font-size: 30px;
+    font-size: 32px;
     margin-bottom: 20px;
-    color: #333; /* Cor do texto */
+    color: #2c3e50; /* Cor do texto mais escura e moderna */
+    font-weight: 700; /* Peso da fonte mais forte */
 }
 
 /* Formulário de adição de aluno */
@@ -24,23 +28,30 @@ input, button {
     padding: 12px;
     margin: 10px 5px;
     font-size: 16px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    border-radius: 8px; /* Bordas mais arredondadas */
+    border: 1px solid #ddd; /* Borda mais suave */
     background-color: #fff;
     width: 250px;
+    transition: all 0.3s ease; /* Transição suave para hover e focus */
+}
+
+input:focus, button:focus {
+    border-color: #6c5ce7; /* Cor roxa moderna para foco */
+    box-shadow: 0 0 5px rgba(108, 92, 231, 0.5); /* Sombra suave ao focar */
 }
 
 /* Define o estilo para os botões */
 button {
-    background-color: #4CAF50; /* Cor de fundo do botão */
-    color: white; /* Cor do texto do botão */
+    background-color: #6c5ce7; /* Cor de fundo roxa moderna */
+    color: white;
     border: none;
-    cursor: pointer; /* Altera o cursor para mãozinha */
+    cursor: pointer;
+    font-weight: 500; /* Peso da fonte mais forte */
 }
 
 /* Efeito de hover no botão */
 button:hover {
-    opacity: 0.8; /* Altera a opacidade quando o botão é hoverado */
+    background-color: #5a4fcf; /* Cor mais escura ao passar o mouse */
 }
 
 /* Estilo para a tabela */
@@ -49,19 +60,24 @@ table {
     border-collapse: collapse;
     margin-top: 20px;
     background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para a tabela */
+    border-radius: 8px; /* Bordas arredondadas */
+    overflow: hidden; /* Esconde as bordas internas arredondadas */
 }
 
 /* Estilo das células da tabela */
 th, td {
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     padding: 12px;
     text-align: center;
-    font-size: 14px; /* Reduzindo o tamanho da fonte para a tabela */
+    font-size: 14px;
 }
 
 /* Estilo para o cabeçalho da tabela */
 th {
-    background-color: #f2f2f2;
+    background-color: #6c5ce7; /* Cor roxa moderna */
+    color: white;
+    font-weight: 500;
 }
 
 /* Estilo para células editáveis */
@@ -71,13 +87,13 @@ th {
     height: auto;
     background-color: #f9f9f9;
     padding: 5px;
-    word-wrap: break-word; /* Quebra de linha em palavras longas */
+    word-wrap: break-word;
+    transition: background-color 0.3s ease; /* Transição suave para foco */
 }
 
-/* Estilo quando a célula editável está em foco */
 .editable:focus {
-    outline: none; /* Remove o contorno padrão */
     background-color: #eaeaea;
+    outline: none;
 }
 
 /* Estilos para os botões de status */
@@ -85,15 +101,15 @@ th {
     display: flex;
     justify-content: center;
     margin-top: 10px;
-    gap: 10px; /* Adiciona espaçamento entre os botões */
+    gap: 10px;
 }
 
 /* Estilo dos botões */
 .status-button {
-    padding: 6px 12px; /* Tamanho menor */
+    padding: 6px 12px;
     border: none;
     border-radius: 5px;
-    font-size: 12px; /* Tamanho da fonte menor */
+    font-size: 12px;
     cursor: pointer;
     width: auto;
     transition: background-color 0.3s, transform 0.3s;
@@ -122,22 +138,22 @@ th {
 
 /* Estilo para botão selecionado */
 .status-button.selected {
-    border: 3px solid #000; /* Borda preta para destacar o botão */
-    transform: scale(1.1); /* Aumenta o botão ao ser selecionado */
+    border: 3px solid #000;
+    transform: scale(1.1);
 }
 
 /* Responsividade para os botões de status */
 @media (max-width: 600px) {
     .status-button-container {
-        flex-direction: row; /* Garantir que fiquem em linha em telas pequenas */
-        flex-wrap: wrap; /* Permite que os botões quebrem para a próxima linha, se necessário */
-        justify-content: space-around; /* Espaço igual entre os botões */
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
     }
 
     .status-button {
         width: auto;
-        margin-bottom: 5px; /* Menor margem */
-        padding: 5px 10px; /* Botões menores */
+        margin-bottom: 5px;
+        padding: 5px 10px;
     }
 }
 
@@ -147,9 +163,9 @@ input[type="file"] {
     max-width: 300px;
     padding: 5px;
     font-size: 14px;
-    white-space: nowrap; /* Evita quebra de linha */
-    overflow: hidden; /* Impede que o texto ultrapasse os limites do botão */
-    text-overflow: ellipsis; /* Adiciona "..." se o texto for muito longo */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Estilo para a data no canto superior direito */
@@ -159,11 +175,11 @@ input[type="file"] {
     right: 20px;
     font-size: 18px;
     font-weight: bold;
-    background-color: #f2f2f2; /* Cor de fundo suave para destacar */
-    padding: 8px 15px; /* Espaçamento interno para a data */
-    border-radius: 8px; /* Borda arredondada */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para dar destaque */
-    color: #333; /* Cor do texto */
-    font-family: 'Arial', sans-serif; /* Manter a fonte padrão */
-    z-index: 10; /* Garantir que fique acima de outros elementos */
+    background-color: #6c5ce7; /* Cor roxa moderna */
+    color: white; /* Texto branco para contraste */
+    padding: 8px 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
+    z-index: 10;
 }
