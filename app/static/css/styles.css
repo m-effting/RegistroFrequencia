@@ -1,60 +1,79 @@
-/* Define a fonte do corpo da página como 'Roboto' e margens e padding de 20px */
+/* Importação da fonte 'Roboto' do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
 body {
     font-family: 'Roboto', sans-serif;
-    margin: 20px;
+    margin: 0;
     padding: 0;
     text-align: center;
     background-color: #F7F7F7; /* Fundo claro */
     color: #3D5675; /* Cor de texto escura para contraste */
 }
 
-/* Importação da fonte 'Roboto' do Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
-
-/* Define o estilo para o título h1 */
-h1 {
-    font-size: 32px;
+/* Cabeçalho estilizado */
+header {
+    background-color: #3D5675;
+    padding: 20px;
+    color: white;
+    text-align: center;
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
-    color: #3D5675; 
+}
+
+header h1 {
+    margin: 0;
+    font-size: 40px;
     font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Container para centralizar o conteúdo */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
 /* Formulário de adição de aluno */
 form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 30px;
+    display: inline-block;
+    width: 100%;
+    max-width: 600px;
 }
 
-/* Define o estilo para os inputs e botões */
-input, button {
+form input, form button {
+    width: calc(100% - 20px);
+    margin: 10px 0;
     padding: 12px;
-    margin: 10px 5px;
     font-size: 16px;
     border-radius: 8px;
     border: 1px solid #3D5675; /* Borda azul escura */
-    background-color: #E8E1DB; /* Fundo claro para inputs */
-    color: #3D5675; /* Texto escuro */
-    width: 250px;
+    background-color: #dde4eb; /* Fundo claro para inputs */
+    color: #1b1c1e; /* Texto escuro */
     transition: all 0.3s ease;
 }
 
-input:focus, button:focus {
-    border-color: #a6dcf0; /* Azul claro para foco */
-    box-shadow: 0 0 5px rgba(0, 177, 243, 0.5); /* Sombra azul */
-}
 
-/* Define o estilo para os botões */
+/* Define o estilo para botão salvar chamada */
 button {
-    background-color: #7F99B2; /* Azul claro para botões */
-    color: rgb(45, 41, 41);
+    background-color: #7F99B2; 
+    color: white;
     border: none;
     cursor: pointer;
     font-weight: 500;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Efeito de hover no botão */
-button:hover {
-    background-color: #3D5675; /* Azul escuro ao passar o mouse */
+
+button:active {
+    transform: translateY(0);
 }
 
 /* Estilo para a tabela */
@@ -62,26 +81,32 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    background-color: #E8E1DB; /* Fundo claro para a tabela */
+    background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    border-radius: 10px;
     overflow: hidden;
 }
 
 /* Estilo das células da tabela */
 th, td {
-    border: 1px solid #3D5675; /* Borda azul escura */
-    padding: 12px;
+    padding: 15px;
     text-align: center;
     font-size: 14px;
-    color: #3D5675; /* Texto escuro */
+    color: #3D5675;
 }
 
-/* Estilo para o cabeçalho da tabela */
 th {
     background-color: #3D5675; /* Azul escuro para cabeçalho */
     color: white;
     font-weight: 500;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
 }
 
 /* Estilo para células editáveis */
@@ -89,7 +114,7 @@ th {
     min-width: 150px;
     max-width: 250px;
     height: auto;
-    background-color: #E8E1DB; /* Fundo claro */
+    background-color: transparent; /* Fundo transparente para combinar com as outras células */
     padding: 5px;
     word-wrap: break-word;
     transition: background-color 0.3s ease;
@@ -97,17 +122,16 @@ th {
 }
 
 .editable:focus {
-    background-color: #90b2be; /* Azul claro ao editar */
+    background-color: rgba(0, 177, 243, 0.2); /* Fundo azul claro ao editar */
     outline: none;
-    color: white; /* Texto branco ao editar */
+    color: #3D5675; /* Mantém a cor do texto ao editar */
 }
-
 /* Estilos para os botões de status */
 .status-button-container {
     display: flex;
     justify-content: center;
     margin-top: 10px;
-    gap: 5px; /* Espaçamento reduzido entre os botões */
+    gap: 5px; 
 }
 
 /* Estilo dos botões */
@@ -123,17 +147,17 @@ th {
 
 /* Botões de status */
 .status-button.p { 
-    background-color: #4caf50; /* Verde para Presente */
+    background-color: #4caf50; 
     color: white;
 }
 
 .status-button.f {
-    background-color: #f44336; /* Vermelho para Falta */
+    background-color: #f44336; 
     color: white;
 }
 
 .status-button.fj {
-    background-color: #ffeb3b; /* Amarelo para Falta Justificada */
+    background-color: #ffeb3b; 
     color: black;
 }
 
@@ -155,17 +179,14 @@ th {
 }
 
 /* Responsividade para os botões de status */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .status-button-container {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-around;
+        flex-direction: column;
     }
 
     .status-button {
-        width: auto;
+        width: 100%;
         margin-bottom: 5px;
-        padding: 5px 10px;
     }
 }
 
@@ -178,7 +199,7 @@ input[type="file"] {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    background-color: #E8E1DB; /* Fundo claro */
+    background-color: #dde4eb; /* Fundo claro */
     color: #3D5675; /* Texto escuro */
 }
 
@@ -246,4 +267,38 @@ input[type="file"] {
 .nome-aluno[contenteditable="true"] {
     background-color: rgba(0, 177, 243, 0.2); /* Fundo mais claro ao editar */
     outline: 2px solid #00B1F3; /* Borda azul ao editar */
+}
+
+/* Rodapé estilizado */
+footer {
+    background-color: #3D5675;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    margin-top: 30px;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Mensagens de feedback */
+.alert {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
 }
