@@ -22,8 +22,6 @@ document.addEventListener("DOMContentLoaded", function () {
         // Verifica se todos os campos estão preenchidos antes de adicionar o aluno
         if (escola !== "" && turma !== "" && nome !== "") {
             adicionarAluno(nome, turma); // Chama a função para adicionar o aluno
-            localStorage.setItem("escola", escola); // Salva a escola no localStorage
-            localStorage.setItem("turma", turma);   // Salva a turma no localStorage
             document.getElementById("aluno").value = ""; // Limpa o campo de nome do aluno
         }
     });
@@ -31,8 +29,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Delegar evento de clique para os botões de status
     document.addEventListener("click", function (event) {
         if (event.target.classList.contains("status-button")) {
-            console.log("Botão clicado:", event.target); // Verifica se o botão clicado está sendo detectado
-
             let nome = event.target.dataset.nome; // Recupera o nome do aluno
             let status = event.target.classList.contains('p') ? "Presente" : 
                          event.target.classList.contains('f') ? "Falta" : "Falta Justificada"; // Determina o status
@@ -93,6 +89,5 @@ function adicionarAluno(nome, turma) {
 
 // Função para alterar a presença (simulação de backend)
 function alterarPresenca(nome, status) {
-    console.log(`Alterando presença de ${nome} para ${status}`); // Log para depuração
-    //  adicionar a lógica para salvar o status no backend
+    // adicionar a lógica para salvar o status no backend
 }
