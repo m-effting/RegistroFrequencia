@@ -85,16 +85,17 @@ th {
     display: flex;
     justify-content: center;
     margin-top: 10px;
+    gap: 10px; /* Adiciona espaçamento entre os botões */
 }
 
+/* Estilo dos botões */
 .status-button {
-    padding: 8px 15px; /* Tamanho reduzido para os botões */
-    margin: 0 5px;
+    padding: 6px 12px; /* Tamanho menor */
     border: none;
     border-radius: 5px;
-    font-size: 14px; /* Tamanho da fonte reduzido nos botões */
+    font-size: 12px; /* Tamanho da fonte menor */
     cursor: pointer;
-    width: 90px; /* Largura reduzida */
+    width: auto;
     transition: background-color 0.3s, transform 0.3s;
 }
 
@@ -128,12 +129,15 @@ th {
 /* Responsividade para os botões de status */
 @media (max-width: 600px) {
     .status-button-container {
-        flex-direction: column;
+        flex-direction: row; /* Garantir que fiquem em linha em telas pequenas */
+        flex-wrap: wrap; /* Permite que os botões quebrem para a próxima linha, se necessário */
+        justify-content: space-around; /* Espaço igual entre os botões */
     }
 
     .status-button {
         width: auto;
-        margin-bottom: 10px;
+        margin-bottom: 5px; /* Menor margem */
+        padding: 5px 10px; /* Botões menores */
     }
 }
 
@@ -155,4 +159,11 @@ input[type="file"] {
     right: 20px;
     font-size: 18px;
     font-weight: bold;
+    background-color: #f2f2f2; /* Cor de fundo suave para destacar */
+    padding: 8px 15px; /* Espaçamento interno para a data */
+    border-radius: 8px; /* Borda arredondada */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para dar destaque */
+    color: #333; /* Cor do texto */
+    font-family: 'Arial', sans-serif; /* Manter a fonte padrão */
+    z-index: 10; /* Garantir que fique acima de outros elementos */
 }
