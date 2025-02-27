@@ -33,6 +33,7 @@ def salvar_chamada_excel(escola, turma):
         if chave in chamadas:
             for aluno_data in chamadas[chave]:
                 ws.append([aluno_data['nome'], aluno_data['presenca'], aluno_data['observacao']])
+                
 
         # Ajuste automático do tamanho das colunas
         for col in range(1, 4):

@@ -9,13 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const escolaInput = document.getElementById("escola");
     const turmaInput = document.getElementById("turma");
 
-    // Restaurar valores salvos da escola e da turma ao carregar a página
-    if (localStorage.getItem("escola")) {
-        escolaInput.value = localStorage.getItem("escola"); // Preenche o campo de escola com o valor salvo
-    }
-    if (localStorage.getItem("turma")) {
-        turmaInput.value = localStorage.getItem("turma"); // Preenche o campo de turma com o valor salvo
-    }
 
     // Adicionar aluno ao pressionar o botão de enviar no formulário
     form.addEventListener("submit", function (event) {
@@ -35,12 +28,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Altera o status de presença ao clicar nos botões
-    document.querySelectorAll(".status-button").forEach(button => {
-        button.addEventListener("click", function () {
-            let nome = this.dataset.nome; // Recupera o nome do aluno
-            let status = this.classList.contains('p') ? "Presente" : 
-                         this.classList.contains('f') ? "Falta" : "Falta Justificada"; // Determina o status
+    // Delegar evento de clique para os botões de status
+    document.addEventListener("click", function (event) {
+        if (event.target.classList.contains("status-button")) {
+            console.log("Botão clicado:", event.target); // Verifica se o botão clicado está sendo detectado
+
+            let nome = event.target.dataset.nome; // Recupera o nome do aluno
+            let status = event.target.classList.contains('p') ? "Presente" : 
+                         event.target.classList.contains('f') ? "Falta" : "Falta Justificada"; // Determina o status
             alterarPresenca(nome, status); // Chama a função para alterar o status
 
             // Remover a classe 'selected' de todos os botões
@@ -49,8 +44,8 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             // Adicionar a classe 'selected' ao botão clicado
-            this.classList.add('selected');
-        });
+            event.target.classList.add('selected');
+        }
     });
 });
 
@@ -94,4 +89,10 @@ function adicionarAluno(nome, turma) {
     colunaObservacao.classList.add("editable");
     colunaObservacao.dataset.nome = nome; // Atribui o nome à célula de observação
     colunaObservacao.contentEditable = "true"; // Permite a edição do conteúdo
+}
+
+// Função para alterar a presença (simulação de backend)
+function alterarPresenca(nome, status) {
+    console.log(`Alterando presença de ${nome} para ${status}`); // Log para depuração
+    //  adicionar a lógica para salvar o status no backend
 }
