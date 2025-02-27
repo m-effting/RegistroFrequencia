@@ -1,10 +1,10 @@
-/* Define a fonte do corpo da página como 'Roboto' (uma fonte moderna) e margens e padding de 20px */
+/* Define a fonte do corpo da página como 'Roboto' e margens e padding de 20px */
 body {
     font-family: 'Roboto', sans-serif;
     margin: 20px;
     padding: 0;
     text-align: center;
-    background-color: #f8f9fa; /* Cor de fundo mais suave */
+    background-color: #f8f9fa;
 }
 
 /* Importação da fonte 'Roboto' do Google Fonts */
@@ -14,8 +14,8 @@ body {
 h1 {
     font-size: 32px;
     margin-bottom: 20px;
-    color: #2c3e50; /* Cor do texto mais escura e moderna */
-    font-weight: 700; /* Peso da fonte mais forte */
+    color: #2c3e50;
+    font-weight: 700;
 }
 
 /* Formulário de adição de aluno */
@@ -28,30 +28,30 @@ input, button {
     padding: 12px;
     margin: 10px 5px;
     font-size: 16px;
-    border-radius: 8px; /* Bordas mais arredondadas */
-    border: 1px solid #ddd; /* Borda mais suave */
+    border-radius: 8px;
+    border: 1px solid #ddd;
     background-color: #fff;
     width: 250px;
-    transition: all 0.3s ease; /* Transição suave para hover e focus */
+    transition: all 0.3s ease;
 }
 
 input:focus, button:focus {
-    border-color: #6c5ce7; /* Cor roxa moderna para foco */
-    box-shadow: 0 0 5px rgba(108, 92, 231, 0.5); /* Sombra suave ao focar */
+    border-color: #6c5ce7;
+    box-shadow: 0 0 5px rgba(108, 92, 231, 0.5);
 }
 
 /* Define o estilo para os botões */
 button {
-    background-color: #6c5ce7; /* Cor de fundo roxa moderna */
+    background-color: #6c5ce7;
     color: white;
     border: none;
     cursor: pointer;
-    font-weight: 500; /* Peso da fonte mais forte */
+    font-weight: 500;
 }
 
 /* Efeito de hover no botão */
 button:hover {
-    background-color: #5a4fcf; /* Cor mais escura ao passar o mouse */
+    background-color: #5a4fcf;
 }
 
 /* Estilo para a tabela */
@@ -60,9 +60,9 @@ table {
     border-collapse: collapse;
     margin-top: 20px;
     background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para a tabela */
-    border-radius: 8px; /* Bordas arredondadas */
-    overflow: hidden; /* Esconde as bordas internas arredondadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 /* Estilo das células da tabela */
@@ -75,7 +75,7 @@ th, td {
 
 /* Estilo para o cabeçalho da tabela */
 th {
-    background-color: #6c5ce7; /* Cor roxa moderna */
+    background-color: #6c5ce7;
     color: white;
     font-weight: 500;
 }
@@ -88,7 +88,7 @@ th {
     background-color: #f9f9f9;
     padding: 5px;
     word-wrap: break-word;
-    transition: background-color 0.3s ease; /* Transição suave para foco */
+    transition: background-color 0.3s ease;
 }
 
 .editable:focus {
@@ -117,17 +117,17 @@ th {
 
 /* Botões de status */
 .status-button.p { 
-    background-color: #4CAF50; /* Verde para "Presente" */
+    background-color: #4CAF50;
     color: white;
 }
 
 .status-button.f {
-    background-color: #FF6347; /* Vermelho para "Falta" */
+    background-color: #FF6347;
     color: white;
 }
 
 .status-button.fj {
-    background-color: #FFD700; /* Amarelo para "Falta Justificada" */
+    background-color: #FFD700;
     color: black;
 }
 
@@ -175,11 +175,36 @@ input[type="file"] {
     right: 20px;
     font-size: 18px;
     font-weight: bold;
-    background-color: #6c5ce7; /* Cor roxa moderna */
-    color: white; /* Texto branco para contraste */
+    background-color: #6c5ce7;
+    color: white;
     padding: 8px 15px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-family: 'Roboto', sans-serif;
     z-index: 10;
+}
+
+/* Estilo para o ícone de lixeira */
+.btn-excluir {
+    background: none;
+    border: none;
+    color: #FF6347;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.btn-excluir:hover {
+    color: #cc0000;
+}
+
+/* Estilo para o nome do aluno */
+.nome-aluno {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.nome-aluno:hover {
+    color: #6c5ce7;
 }

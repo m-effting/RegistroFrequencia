@@ -1,116 +1,131 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Objeto para armazenar o status de presença de cada aluno
-    const statusPresenca = {};
-
-    // Exibe a data atual no canto superior direito
+    const statusPresenca = {}; // Armazena o status de presença de cada aluno
     const dataHojeElement = document.getElementById("dataHoje");
-    const dataHoje = new Date().toLocaleDateString('pt-BR'); // Formato: DD/MM/AAAA
+    const dataHoje = new Date().toLocaleDateString('pt-BR');
     dataHojeElement.textContent = dataHoje;
 
-    // Recupera o formulário de adicionar aluno e os campos de escola e turma
     const form = document.getElementById("formAdicionarAluno");
     const escolaInput = document.getElementById("escola");
     const turmaInput = document.getElementById("turma");
 
-    // Adicionar aluno ao pressionar o botão de enviar no formulário
+    // Adicionar aluno
     form.addEventListener("submit", function (event) {
-        event.preventDefault(); // Previne o comportamento padrão de envio do formulário
-
-        // Recupera os valores dos campos e remove espaços extras
+        event.preventDefault();
         let escola = escolaInput.value.trim();
         let turma = turmaInput.value.trim();
         let nome = document.getElementById("aluno").value.trim();
 
-        // Verifica se todos os campos estão preenchidos antes de adicionar o aluno
         if (escola !== "" && turma !== "" && nome !== "") {
-            adicionarAluno(nome, turma); // Chama a função para adicionar o aluno
-            document.getElementById("aluno").value = ""; // Limpa o campo de nome do aluno
+            adicionarAluno(nome, turma);
+            document.getElementById("aluno").value = "";
         }
     });
 
-    // Delegar evento de clique para os botões de status
+    // Delegar eventos de clique
     document.addEventListener("click", function (event) {
         if (event.target.classList.contains("status-button")) {
-            let nome = event.target.dataset.nome; // Recupera o nome do aluno
+            let nome = event.target.dataset.nome;
             let status = event.target.classList.contains('p') ? "Presente" : 
-                         event.target.classList.contains('f') ? "Falta" : "Falta Justificada"; // Determina o status
-
-            // Salva o status no objeto statusPresenca
+                         event.target.classList.contains('f') ? "Falta" : "Falta Justificada";
             statusPresenca[nome] = status;
-
-            // Atualiza a interface para refletir o status atual
             atualizarInterfaceStatus(nome, status);
-
-            // Remove a classe 'selected' de todos os botões do mesmo aluno
             const botoesAluno = document.querySelectorAll(`.status-button[data-nome="${nome}"]`);
             botoesAluno.forEach(btn => btn.classList.remove('selected'));
-
-            // Adiciona a classe 'selected' ao botão clicado
             event.target.classList.add('selected');
+        }
+
+        // Excluir aluno
+        if (event.target.classList.contains("btn-excluir")) {
+            const nome = event.target.dataset.nome;
+            if (confirm(`Tem certeza que deseja excluir o aluno ${nome}?`)) {
+                excluirAluno(nome);
+            }
         }
     });
 
-    // Função para adicionar aluno na tabela (simulação de backend)
+    // Editar nome do aluno com duplo clique
+    document.addEventListener("dblclick", function (event) {
+        if (event.target.classList.contains("nome-aluno")) {
+            const nomeAtual = event.target.dataset.nome;
+            const novoNome = prompt("Digite o novo nome do aluno:", nomeAtual);
+            if (novoNome && novoNome.trim() !== "") {
+                editarNomeAluno(nomeAtual, novoNome.trim());
+            }
+        }
+    });
+
+    // Função para adicionar aluno
     function adicionarAluno(nome, turma) {
-        let tabela = document.querySelector("table"); // Seleciona a tabela onde os alunos serão exibidos
-
-        // Cria uma nova linha na tabela
+        let tabela = document.querySelector("table");
         let novaLinha = tabela.insertRow(-1);
-        let colunaNome = novaLinha.insertCell(0); // Cria a célula para o nome do aluno
-        let colunaPresenca = novaLinha.insertCell(1); // Cria a célula para a presença
-        let colunaObservacao = novaLinha.insertCell(2); // Cria a célula para observação
+        novaLinha.setAttribute("data-nome", nome);
 
-        colunaNome.textContent = nome; // Define o nome do aluno na primeira coluna
+        let colunaNome = novaLinha.insertCell(0);
+        let colunaPresenca = novaLinha.insertCell(1);
+        let colunaObservacao = novaLinha.insertCell(2);
 
-        // Cria os botões de status
+        // Nome do aluno com ícone de lixeira
+        colunaNome.innerHTML = `
+            <span class="nome-aluno" data-nome="${nome}">${nome}</span>
+            <button class="btn-excluir" data-nome="${nome}"><i class="fas fa-trash"></i></button>
+        `;
+
+        // Botões de status
         let statusButtonContainer = document.createElement("div");
         statusButtonContainer.classList.add("status-button-container");
 
-        let btnPresente = document.createElement("button");
-        btnPresente.classList.add("status-button", "p");
-        btnPresente.textContent = "P"; // Texto do botão
-        btnPresente.dataset.nome = nome; // Atribui o nome ao botão
-        statusButtonContainer.appendChild(btnPresente);
+        ["p", "f", "fj"].forEach(status => {
+            let btn = document.createElement("button");
+            btn.classList.add("status-button", status);
+            btn.textContent = status === "p" ? "P" : status === "f" ? "F" : "FJ";
+            btn.dataset.nome = nome;
+            statusButtonContainer.appendChild(btn);
+        });
 
-        let btnFalta = document.createElement("button");
-        btnFalta.classList.add("status-button", "f");
-        btnFalta.textContent = "F"; // Texto do botão
-        btnFalta.dataset.nome = nome; // Atribui o nome ao botão
-        statusButtonContainer.appendChild(btnFalta);
+        colunaPresenca.appendChild(statusButtonContainer);
 
-        let btnFaltaJustificada = document.createElement("button");
-        btnFaltaJustificada.classList.add("status-button", "fj");
-        btnFaltaJustificada.textContent = "FJ"; // Texto do botão
-        btnFaltaJustificada.dataset.nome = nome; // Atribui o nome ao botão
-        statusButtonContainer.appendChild(btnFaltaJustificada);
-
-        colunaPresenca.appendChild(statusButtonContainer); // Adiciona os botões na coluna de presença
-
-        // Cria a célula de observação editável
+        // Célula de observação
         colunaObservacao.classList.add("editable");
-        colunaObservacao.dataset.nome = nome; // Atribui o nome à célula de observação
-        colunaObservacao.contentEditable = "true"; // Permite a edição do conteúdo
+        colunaObservacao.dataset.nome = nome;
+        colunaObservacao.contentEditable = "true";
 
-        // Inicializa o status do aluno como "Presente" por padrão
+        // Inicializa o status do aluno
         statusPresenca[nome] = "Presente";
-        atualizarInterfaceStatus(nome, "Presente"); // Atualiza a interface para refletir o status inicial
+        atualizarInterfaceStatus(nome, "Presente");
     }
 
-    // Função para atualizar a interface com base no status salvo
+    // Função para editar o nome do aluno
+    function editarNomeAluno(nomeAtual, novoNome) {
+        const linha = document.querySelector(`tr[data-nome="${nomeAtual}"]`);
+        if (linha) {
+            linha.setAttribute("data-nome", novoNome);
+            linha.querySelector(".nome-aluno").textContent = novoNome;
+            linha.querySelector(".nome-aluno").dataset.nome = novoNome;
+            linha.querySelector(".btn-excluir").dataset.nome = novoNome;
+            statusPresenca[novoNome] = statusPresenca[nomeAtual];
+            delete statusPresenca[nomeAtual];
+        }
+    }
+
+    // Função para excluir o aluno
+    function excluirAluno(nome) {
+        const linha = document.querySelector(`tr[data-nome="${nome}"]`);
+        if (linha) {
+            linha.remove();
+            delete statusPresenca[nome];
+        }
+    }
+
+    // Função para atualizar a interface com base no status
     function atualizarInterfaceStatus(nome, status) {
         const botoesAluno = document.querySelectorAll(`.status-button[data-nome="${nome}"]`);
         botoesAluno.forEach(btn => {
-            btn.classList.remove('selected'); // Remove a classe 'selected' de todos os botões
+            btn.classList.remove('selected');
             if ((status === "Presente" && btn.classList.contains('p')) ||
                 (status === "Falta" && btn.classList.contains('f')) ||
                 (status === "Falta Justificada" && btn.classList.contains('fj'))) {
-                btn.classList.add('selected'); // Adiciona a classe 'selected' ao botão correspondente
+                btn.classList.add('selected');
             }
         });
-    }
-
-    // Função para alterar a presença (simulação de backend)
-    function alterarPresenca(nome, status) {
-        console.log(`Aluno: ${nome}, Status: ${status}`); // Exibe o status no console (simulação de backend)
     }
 });

@@ -4,30 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Presença</title>
-
-    <!-- Referência ao manifesto para PWA -->
     <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
-    
-    <!-- Referência ao ícone da aplicação -->
     <link rel="icon" href="{{ url_for('static', filename='images/icon-192x192.png') }}" type="image/png" sizes="192x192">
-    
-    <!-- Link para o CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    
-    <!-- Importação da fonte 'Roboto' do Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- Ícones do FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <!-- Título da página -->
     <h1>Registro de Presença</h1>
-
-    <!-- Data no canto superior direito -->
     <div id="dataHoje" class="data-hoje"></div>
 
-    <!-- Formulário de Adição de Aluno -->
     <form id="formAdicionarAluno">
         <input type="text" id="escola" name="escola" placeholder="Nome da Escola" required>
         <input type="text" id="turma" name="turma" placeholder="Turma" required>
@@ -37,7 +23,6 @@
 
     <hr>
 
-    <!-- Tabela de Presença -->
     <table>
         <tr>
             <th>Nome</th>
@@ -46,10 +31,12 @@
         </tr>
         {% for chave, alunos in chamadas.items() %}
             {% for aluno in alunos %}
-                <tr>
-                    <td>{{ aluno.nome }}</td>
+                <tr data-nome="{{ aluno.nome }}">
                     <td>
-                        <!-- Botões de status (Presente, Falta, Falta Justificada) -->
+                        <span class="nome-aluno" data-nome="{{ aluno.nome }}">{{ aluno.nome }}</span>
+                        <button class="btn-excluir" data-nome="{{ aluno.nome }}"><i class="fas fa-trash"></i></button>
+                    </td>
+                    <td>
                         <div class="status-button-container">
                             <button class="status-button p" data-nome="{{ aluno.nome }}"><i class="fas fa-check"></i> P</button>
                             <button class="status-button f" data-nome="{{ aluno.nome }}"><i class="fas fa-times"></i> F</button>
@@ -64,7 +51,6 @@
 
     <hr>
 
-    <!-- Formulário de Importação de Alunos -->
     <form action="{{ url_for('importar_chamada') }}" method="POST" enctype="multipart/form-data">
         <input type="file" name="file" accept=".csv">
         <button type="submit"><i class="fas fa-file-import"></i> Importar Chamada</button>
@@ -72,19 +58,15 @@
     
     <button id="btnSalvarChamada"><i class="fas fa-save"></i> Salvar Chamada</button>
 
-    <!-- Script do App -->
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-
-    <!-- Registro do Service Worker -->
     <script src="{{ url_for('static', filename='js/service-worker.js') }}"></script>
 
-    <!-- Exibição de mensagens flash -->
     {% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    {% for category, message in messages %}
-      <div class="alert alert-{{ category }}">{{ message }}</div>
-    {% endfor %}
-  {% endif %}
-{% endwith %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 </body>
 </html>
