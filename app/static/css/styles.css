@@ -4,7 +4,8 @@ body {
     margin: 20px;
     padding: 0;
     text-align: center;
-    background-color: #f8f9fa;
+    background-color: #F7F7F7; /* Fundo claro */
+    color: #3D5675; /* Cor de texto escura para contraste */
 }
 
 /* Importação da fonte 'Roboto' do Google Fonts */
@@ -14,7 +15,7 @@ body {
 h1 {
     font-size: 32px;
     margin-bottom: 20px;
-    color: #2c3e50;
+    color: #3D5675; 
     font-weight: 700;
 }
 
@@ -29,29 +30,31 @@ input, button {
     margin: 10px 5px;
     font-size: 16px;
     border-radius: 8px;
-    border: 1px solid #ddd;
-    background-color: #fff;
+    border: 1px solid #3D5675; /* Borda azul escura */
+    background-color: #E8E1DB; /* Fundo claro para inputs */
+    color: #3D5675; /* Texto escuro */
     width: 250px;
     transition: all 0.3s ease;
 }
 
 input:focus, button:focus {
-    border-color: #6c5ce7;
-    box-shadow: 0 0 5px rgba(108, 92, 231, 0.5);
+    border-color: #a6dcf0; /* Azul claro para foco */
+    box-shadow: 0 0 5px rgba(0, 177, 243, 0.5); /* Sombra azul */
 }
 
 /* Define o estilo para os botões */
 button {
-    background-color: #6c5ce7;
-    color: white;
+    background-color: #7F99B2; /* Azul claro para botões */
+    color: rgb(45, 41, 41);
     border: none;
     cursor: pointer;
     font-weight: 500;
+    transition: background-color 0.3s ease;
 }
 
 /* Efeito de hover no botão */
 button:hover {
-    background-color: #5a4fcf;
+    background-color: #3D5675; /* Azul escuro ao passar o mouse */
 }
 
 /* Estilo para a tabela */
@@ -59,7 +62,7 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    background-color: #fff;
+    background-color: #E8E1DB; /* Fundo claro para a tabela */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow: hidden;
@@ -67,15 +70,16 @@ table {
 
 /* Estilo das células da tabela */
 th, td {
-    border: 1px solid #ddd;
+    border: 1px solid #3D5675; /* Borda azul escura */
     padding: 12px;
     text-align: center;
     font-size: 14px;
+    color: #3D5675; /* Texto escuro */
 }
 
 /* Estilo para o cabeçalho da tabela */
 th {
-    background-color: #6c5ce7;
+    background-color: #3D5675; /* Azul escuro para cabeçalho */
     color: white;
     font-weight: 500;
 }
@@ -85,15 +89,17 @@ th {
     min-width: 150px;
     max-width: 250px;
     height: auto;
-    background-color: #f9f9f9;
+    background-color: #E8E1DB; /* Fundo claro */
     padding: 5px;
     word-wrap: break-word;
     transition: background-color 0.3s ease;
+    color: #3D5675; /* Texto escuro */
 }
 
 .editable:focus {
-    background-color: #eaeaea;
+    background-color: #90b2be; /* Azul claro ao editar */
     outline: none;
+    color: white; /* Texto branco ao editar */
 }
 
 /* Estilos para os botões de status */
@@ -101,7 +107,7 @@ th {
     display: flex;
     justify-content: center;
     margin-top: 10px;
-    gap: 10px;
+    gap: 5px; /* Espaçamento reduzido entre os botões */
 }
 
 /* Estilo dos botões */
@@ -117,17 +123,17 @@ th {
 
 /* Botões de status */
 .status-button.p { 
-    background-color: #4CAF50;
+    background-color: #4caf50; /* Verde para Presente */
     color: white;
 }
 
 .status-button.f {
-    background-color: #FF6347;
+    background-color: #f44336; /* Vermelho para Falta */
     color: white;
 }
 
 .status-button.fj {
-    background-color: #FFD700;
+    background-color: #ffeb3b; /* Amarelo para Falta Justificada */
     color: black;
 }
 
@@ -138,8 +144,14 @@ th {
 
 /* Estilo para botão selecionado */
 .status-button.selected {
-    border: 3px solid #000;
+    border: 3px solid #ffffff; /* Borda branca para seleção */
     transform: scale(1.1);
+}
+
+/* Estilo para botões não selecionados */
+.status-button:not(.selected) {
+    opacity: 0.5;
+    filter: grayscale(50%);
 }
 
 /* Responsividade para os botões de status */
@@ -166,6 +178,8 @@ input[type="file"] {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    background-color: #E8E1DB; /* Fundo claro */
+    color: #3D5675; /* Texto escuro */
 }
 
 /* Estilo para a data no canto superior direito */
@@ -175,8 +189,8 @@ input[type="file"] {
     right: 20px;
     font-size: 18px;
     font-weight: bold;
-    background-color: #6c5ce7;
-    color: white;
+    background-color: #7F99B2; /* Azul claro */
+    color: rgb(28, 26, 26);
     padding: 8px 15px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -188,23 +202,48 @@ input[type="file"] {
 .btn-excluir {
     background: none;
     border: none;
-    color: #FF6347;
+    color: #f44336; /* Vermelho suave */
     cursor: pointer;
     margin-left: 10px;
     font-size: 14px;
     transition: color 0.3s ease;
+    padding: 5px;
 }
 
 .btn-excluir:hover {
-    color: #cc0000;
+    color: #d32f2f; /* Vermelho mais intenso ao passar o mouse */
+}
+
+/* Estilo para o ícone de lápis */
+.btn-editar {
+    background: none;
+    border: none;
+    color: #00B1F3; /* Azul claro */
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 14px;
+    transition: color 0.3s ease;
+    padding: 5px;
+}
+
+.btn-editar:hover {
+    color: #0096cc; /* Azul mais intenso ao passar o mouse */
 }
 
 /* Estilo para o nome do aluno */
 .nome-aluno {
     cursor: pointer;
     transition: color 0.3s ease;
+    padding: 5px;
+    border-radius: 4px;
+    color: #3D5675; /* Texto escuro */
 }
 
 .nome-aluno:hover {
-    color: #6c5ce7;
+    background-color: rgba(0, 177, 243, 0.1); /* Fundo azul claro ao passar o mouse */
+}
+
+.nome-aluno[contenteditable="true"] {
+    background-color: rgba(0, 177, 243, 0.2); /* Fundo mais claro ao editar */
+    outline: 2px solid #00B1F3; /* Borda azul ao editar */
 }

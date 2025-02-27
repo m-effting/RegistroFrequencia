@@ -33,7 +33,8 @@
             {% for aluno in alunos %}
                 <tr data-nome="{{ aluno.nome }}">
                     <td>
-                        <span class="nome-aluno" data-nome="{{ aluno.nome }}">{{ aluno.nome }}</span>
+                        <span class="nome-aluno" data-nome="{{ aluno.nome }}" contenteditable="false">{{ aluno.nome }}</span>
+                        <button class="btn-editar" data-nome="{{ aluno.nome }}"><i class="fas fa-pencil-alt"></i></button>
                         <button class="btn-excluir" data-nome="{{ aluno.nome }}"><i class="fas fa-trash"></i></button>
                     </td>
                     <td>

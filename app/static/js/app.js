@@ -41,16 +41,33 @@ document.addEventListener("DOMContentLoaded", function () {
                 excluirAluno(nome);
             }
         }
-    });
 
-    // Editar nome do aluno com duplo clique
-    document.addEventListener("dblclick", function (event) {
-        if (event.target.classList.contains("nome-aluno")) {
-            const nomeAtual = event.target.dataset.nome;
-            const novoNome = prompt("Digite o novo nome do aluno:", nomeAtual);
-            if (novoNome && novoNome.trim() !== "") {
-                editarNomeAluno(nomeAtual, novoNome.trim());
-            }
+        // Editar nome do aluno com ícone de lápis
+        if (event.target.classList.contains("btn-editar")) {
+            const nome = event.target.dataset.nome;
+            const nomeAluno = document.querySelector(`.nome-aluno[data-nome="${nome}"]`);
+            nomeAluno.contentEditable = true;
+            nomeAluno.focus();
+
+            // Salvar o nome ao pressionar Enter ou perder o foco
+            nomeAluno.addEventListener("keydown", function (e) {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    nomeAluno.contentEditable = false;
+                    const novoNome = nomeAluno.textContent.trim();
+                    if (novoNome !== "") {
+                        editarNomeAluno(nome, novoNome);
+                    }
+                }
+            });
+
+            nomeAluno.addEventListener("blur", function () {
+                nomeAluno.contentEditable = false;
+                const novoNome = nomeAluno.textContent.trim();
+                if (novoNome !== "") {
+                    editarNomeAluno(nome, novoNome);
+                }
+            });
         }
     });
 
@@ -58,16 +75,18 @@ document.addEventListener("DOMContentLoaded", function () {
     function adicionarAluno(nome, turma) {
         let tabela = document.querySelector("table");
         let novaLinha = tabela.insertRow(-1);
-        novaLinha.setAttribute("data-nome", nome);
+        let nomeUnico = `${nome}-${Date.now()}`; // Adiciona um timestamp para garantir unicidade
+        novaLinha.setAttribute("data-nome", nomeUnico);
 
         let colunaNome = novaLinha.insertCell(0);
         let colunaPresenca = novaLinha.insertCell(1);
         let colunaObservacao = novaLinha.insertCell(2);
 
-        // Nome do aluno com ícone de lixeira
+        // Nome do aluno com ícone de lixeira e lápis
         colunaNome.innerHTML = `
-            <span class="nome-aluno" data-nome="${nome}">${nome}</span>
-            <button class="btn-excluir" data-nome="${nome}"><i class="fas fa-trash"></i></button>
+            <span class="nome-aluno" data-nome="${nomeUnico}" contenteditable="false">${nome}</span>
+            <button class="btn-editar" data-nome="${nomeUnico}"><i class="fas fa-pencil-alt"></i></button>
+            <button class="btn-excluir" data-nome="${nomeUnico}"><i class="fas fa-trash"></i></button>
         `;
 
         // Botões de status
@@ -78,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let btn = document.createElement("button");
             btn.classList.add("status-button", status);
             btn.textContent = status === "p" ? "P" : status === "f" ? "F" : "FJ";
-            btn.dataset.nome = nome;
+            btn.dataset.nome = nomeUnico;
             statusButtonContainer.appendChild(btn);
         });
 
@@ -86,23 +105,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Célula de observação
         colunaObservacao.classList.add("editable");
-        colunaObservacao.dataset.nome = nome;
+        colunaObservacao.dataset.nome = nomeUnico;
         colunaObservacao.contentEditable = "true";
 
         // Inicializa o status do aluno
-        statusPresenca[nome] = "Presente";
-        atualizarInterfaceStatus(nome, "Presente");
+        statusPresenca[nomeUnico] = "Presente";
+        atualizarInterfaceStatus(nomeUnico, "Presente");
     }
 
     // Função para editar o nome do aluno
     function editarNomeAluno(nomeAtual, novoNome) {
         const linha = document.querySelector(`tr[data-nome="${nomeAtual}"]`);
         if (linha) {
-            linha.setAttribute("data-nome", novoNome);
-            linha.querySelector(".nome-aluno").textContent = novoNome;
-            linha.querySelector(".nome-aluno").dataset.nome = novoNome;
-            linha.querySelector(".btn-excluir").dataset.nome = novoNome;
-            statusPresenca[novoNome] = statusPresenca[nomeAtual];
+            const nomeUnico = `${novoNome}-${Date.now()}`; // Novo nome com timestamp
+            linha.setAttribute("data-nome", nomeUnico);
+            linha.querySelector(".nome-aluno").dataset.nome = nomeUnico;
+            linha.querySelector(".btn-editar").dataset.nome = nomeUnico;
+            linha.querySelector(".btn-excluir").dataset.nome = nomeUnico;
+            statusPresenca[nomeUnico] = statusPresenca[nomeAtual];
             delete statusPresenca[nomeAtual];
         }
     }
