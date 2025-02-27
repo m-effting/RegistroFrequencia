@@ -7,4 +7,4 @@ O projeto **Paestro** é uma aplicação web desenvolvida para registrar a prese
 
 ## Desenvolvedores
 - Munich Effting
-- Guilherme
+- Guilherme da Rosa

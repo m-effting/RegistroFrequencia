@@ -56,58 +56,12 @@ th, td {
     border: 1px solid #ccc;
     padding: 12px;
     text-align: center;
-    font-size: 16px;
+    font-size: 14px; /* Reduzindo o tamanho da fonte para a tabela */
 }
 
 /* Estilo para o cabeçalho da tabela */
 th {
     background-color: #f2f2f2;
-}
-
-/* Estilo do switch para presença */
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 50px;
-    height: 30px;
-}
-
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #FF6347; /* Vermelho para "Falta" */
-    transition: 0.4s;
-    border-radius: 34px;
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 22px;
-    width: 22px;
-    border-radius: 50%;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: 0.4s;
-}
-
-input:checked + .slider {
-    background-color: #4CAF50; /* Verde para "Presente" */
-}
-
-input:checked + .slider:before {
-    transform: translateX(20px);
 }
 
 /* Estilo para células editáveis */
@@ -126,24 +80,61 @@ input:checked + .slider:before {
     background-color: #eaeaea;
 }
 
-/* Estilo do botão de falta justificada */
-.falta-justificada {
-    background-color: #FFD700; /* Cor amarela para "Falta Justificada" */
-    color: black;
-    padding: 6px 12px;
-    margin-top: 5px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    font-size: 12px;
-    display: inline-block;
-    width: auto;
-    height: auto;
+/* Estilos para os botões de status */
+.status-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
 }
 
-/* Efeito de hover no botão de falta justificada */
-.falta-justificada:hover {
+.status-button {
+    padding: 8px 15px; /* Tamanho reduzido para os botões */
+    margin: 0 5px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px; /* Tamanho da fonte reduzido nos botões */
+    cursor: pointer;
+    width: 90px; /* Largura reduzida */
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+/* Botões de status */
+.status-button.p { 
+    background-color: #4CAF50; /* Verde para "Presente" */
+    color: white;
+}
+
+.status-button.f {
+    background-color: #FF6347; /* Vermelho para "Falta" */
+    color: white;
+}
+
+.status-button.fj {
+    background-color: #FFD700; /* Amarelo para "Falta Justificada" */
+    color: black;
+}
+
+/* Efeito de hover nos botões */
+.status-button:hover {
     opacity: 0.8;
+}
+
+/* Estilo para botão selecionado */
+.status-button.selected {
+    border: 3px solid #000; /* Borda preta para destacar o botão */
+    transform: scale(1.1); /* Aumenta o botão ao ser selecionado */
+}
+
+/* Responsividade para os botões de status */
+@media (max-width: 600px) {
+    .status-button-container {
+        flex-direction: column;
+    }
+
+    .status-button {
+        width: auto;
+        margin-bottom: 10px;
+    }
 }
 
 /* Estilo para o input de arquivo */

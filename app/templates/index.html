@@ -43,12 +43,12 @@
                 <tr>
                     <td>{{ aluno.nome }}</td>
                     <td>
-                        <label class="switch">
-                            <input type="checkbox" class="toggle-presenca" checked data-nome="{{ aluno.nome }}">
-                            <span class="slider"></span>
-                        </label>
-                        <!-- Botão de Falta Justificada visível o tempo todo -->
-                        <button class="falta-justificada" data-nome="{{ aluno.nome }}">Falta Justificada</button>
+                        <!-- Botões de status (Presente, Falta, Falta Justificada) -->
+                        <div class="status-button-container">
+                            <button class="status-button p" data-nome="{{ aluno.nome }}">P</button>
+                            <button class="status-button f" data-nome="{{ aluno.nome }}">F</button>
+                            <button class="status-button fj" data-nome="{{ aluno.nome }}">FJ</button>
+                        </div>
                     </td>
                     <td class="editable" contenteditable="true" data-nome="{{ aluno.nome }}">{{ aluno.observacao }}</td>
                 </tr>

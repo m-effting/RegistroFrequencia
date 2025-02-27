@@ -35,35 +35,21 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Alternar presença no switch (checkbox) quando o estado mudar
-    document.querySelectorAll(".toggle-presenca").forEach(toggle => {
-        toggle.addEventListener("change", function () {
-            let nome = this.dataset.nome; // Recupera o nome do aluno do atributo "data-nome"
-            let status = this.checked ? "Presente" : "Falta"; // Determina o status com base no estado do switch
-            alterarPresenca(nome, status); // Chama a função para alterar a presença do aluno
-
-            // Exibe o botão "Falta Justificada" independentemente do status
-            let faltaJustificadaButton = this.closest('td').querySelector('.falta-justificada');
-            faltaJustificadaButton.style.display = "inline-block"; // Sempre exibe o botão
-        });
-    });
-
-    // Clique no botão "FJ" para marcar como "Falta Justificada" e alterar o switch para falta
-    document.querySelectorAll(".falta-justificada").forEach(button => {
+    // Altera o status de presença ao clicar nos botões
+    document.querySelectorAll(".status-button").forEach(button => {
         button.addEventListener("click", function () {
             let nome = this.dataset.nome; // Recupera o nome do aluno
-            let toggle = document.querySelector(`input[data-nome="${nome}"]`); // Encontra o toggle correspondente
-            toggle.checked = false; // Marca como falta
-            alterarPresenca(nome, "Falta"); // Altera o status para "Falta"
-        });
-    });
+            let status = this.classList.contains('p') ? "Presente" : 
+                         this.classList.contains('f') ? "Falta" : "Falta Justificada"; // Determina o status
+            alterarPresenca(nome, status); // Chama a função para alterar o status
 
-    // Editar observação ao clicar fora da célula (evento "blur")
-    document.querySelectorAll(".editable").forEach(cell => {
-        cell.addEventListener("blur", function () {
-            let nome = this.dataset.nome; // Recupera o nome do aluno
-            let observacao = this.textContent.trim(); // Recupera o texto da observação
-            atualizarObservacao(nome, observacao); // Chama a função para atualizar a observação
+            // Remover a classe 'selected' de todos os botões
+            document.querySelectorAll('.status-button').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+
+            // Adicionar a classe 'selected' ao botão clicado
+            this.classList.add('selected');
         });
     });
 });
@@ -80,29 +66,29 @@ function adicionarAluno(nome, turma) {
 
     colunaNome.textContent = nome; // Define o nome do aluno na primeira coluna
 
-    // Cria o switch de presença (checkbox)
-    let switchContainer = document.createElement("label");
-    switchContainer.classList.add("switch");
+    // Cria os botões de status
+    let statusButtonContainer = document.createElement("div");
+    statusButtonContainer.classList.add("status-button-container");
 
-    let inputToggle = document.createElement("input");
-    inputToggle.type = "checkbox";
-    inputToggle.classList.add("toggle-presenca");
-    inputToggle.checked = true; // Garante que o aluno começa como "Presente"
-    inputToggle.dataset.nome = nome; // Atribui o nome ao campo de dados do toggle
+    let btnPresente = document.createElement("button");
+    btnPresente.classList.add("status-button", "p");
+    btnPresente.textContent = "P"; // Texto do botão
+    btnPresente.dataset.nome = nome; // Atribui o nome ao botão
+    statusButtonContainer.appendChild(btnPresente);
 
-    let slider = document.createElement("span");
-    slider.classList.add("slider");
+    let btnFalta = document.createElement("button");
+    btnFalta.classList.add("status-button", "f");
+    btnFalta.textContent = "F"; // Texto do botão
+    btnFalta.dataset.nome = nome; // Atribui o nome ao botão
+    statusButtonContainer.appendChild(btnFalta);
 
-    switchContainer.appendChild(inputToggle);
-    switchContainer.appendChild(slider);
-    colunaPresenca.appendChild(switchContainer); // Adiciona o switch na coluna de presença
+    let btnFaltaJustificada = document.createElement("button");
+    btnFaltaJustificada.classList.add("status-button", "fj");
+    btnFaltaJustificada.textContent = "FJ"; // Texto do botão
+    btnFaltaJustificada.dataset.nome = nome; // Atribui o nome ao botão
+    statusButtonContainer.appendChild(btnFaltaJustificada);
 
-    // Cria o botão de falta justificada (sempre visível)
-    let faltaJustificadaButton = document.createElement("button");
-    faltaJustificadaButton.classList.add("falta-justificada");
-    faltaJustificadaButton.textContent = "FJ"; // Texto do botão
-    faltaJustificadaButton.dataset.nome = nome; // Atribui o nome ao botão para poder encontrar com o evento
-    colunaPresenca.appendChild(faltaJustificadaButton); // Adiciona o botão na coluna de presença
+    colunaPresenca.appendChild(statusButtonContainer); // Adiciona os botões na coluna de presença
 
     // Cria a célula de observação editável
     colunaObservacao.classList.add("editable");
