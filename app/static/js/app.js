@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.getElementById("aluno").value = "";
                 mostrarMensagem("Aluno adicionado com sucesso!", "success");
             } else {
-                mostrarMensagem("Nome do aluno é inválido.", "error");
+                mostrarMensagem("Nome do aluno já existe ou é inválido.", "error");
             }
         } else {
             mostrarMensagem("Preencha todos os campos.", "error");
@@ -30,6 +30,50 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Delegar eventos de clique
     document.addEventListener("click", function (event) {
+        // Editar nome do aluno
+        if (event.target.classList.contains("btn-editar") || event.target.closest(".btn-editar")) {
+            const btnEditar = event.target.classList.contains("btn-editar") ? event.target : event.target.closest(".btn-editar");
+            const nome = btnEditar.dataset.nome;
+            const nomeAluno = document.querySelector(`.nome-aluno[data-nome="${nome}"]`);
+            nomeAluno.contentEditable = true;
+            nomeAluno.focus();
+
+            // Adicionar um pequeno atraso para evitar conflito com o evento blur
+            setTimeout(() => {
+                nomeAluno.addEventListener("keydown", function (e) {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        nomeAluno.contentEditable = false;
+                        const novoNome = nomeAluno.textContent.trim();
+                        if (novoNome !== "") {
+                            editarNomeAluno(nome, novoNome);
+                            mostrarMensagem("Nome do aluno atualizado com sucesso!", "success");
+                        }
+                    }
+                });
+
+                nomeAluno.addEventListener("blur", function () {
+                    nomeAluno.contentEditable = false;
+                    const novoNome = nomeAluno.textContent.trim();
+                    if (novoNome !== "") {
+                        editarNomeAluno(nome, novoNome);
+                        mostrarMensagem("Nome do aluno atualizado com sucesso!", "success");
+                    }
+                });
+            }, 100); // 100ms de atraso
+        }
+
+        // Excluir aluno
+        if (event.target.classList.contains("btn-excluir") || event.target.closest(".btn-excluir")) {
+            const btnExcluir = event.target.classList.contains("btn-excluir") ? event.target : event.target.closest(".btn-excluir");
+            const nome = btnExcluir.dataset.nome;
+            if (confirm(`Tem certeza que deseja excluir o aluno ${nome}?`)) {
+                excluirAluno(nome);
+                mostrarMensagem("Aluno excluído com sucesso!", "success");
+            }
+        }
+
+        // Alterar status de presença
         if (event.target.classList.contains("status-button")) {
             let nome = event.target.dataset.nome;
             let status = event.target.classList.contains('p') ? "Presente" : 
@@ -39,45 +83,6 @@ document.addEventListener("DOMContentLoaded", function () {
             const botoesAluno = document.querySelectorAll(`.status-button[data-nome="${nome}"]`);
             botoesAluno.forEach(btn => btn.classList.remove('selected'));
             event.target.classList.add('selected');
-        }
-
-        // Excluir aluno
-        if (event.target.classList.contains("btn-excluir")) {
-            const nome = event.target.dataset.nome;
-            if (confirm(`Tem certeza que deseja excluir o aluno ${nome}?`)) {
-                excluirAluno(nome);
-                mostrarMensagem("Aluno excluído com sucesso!", "success");
-            }
-        }
-
-        // Editar nome do aluno com ícone de lápis
-        if (event.target.classList.contains("btn-editar")) {
-            const nome = event.target.dataset.nome;
-            const nomeAluno = document.querySelector(`.nome-aluno[data-nome="${nome}"]`);
-            nomeAluno.contentEditable = true;
-            nomeAluno.focus();
-
-            // Salvar o nome ao pressionar Enter ou perder o foco
-            nomeAluno.addEventListener("keydown", function (e) {
-                if (e.key === "Enter") {
-                    e.preventDefault();
-                    nomeAluno.contentEditable = false;
-                    const novoNome = nomeAluno.textContent.trim();
-                    if (novoNome !== "") {
-                        editarNomeAluno(nome, novoNome);
-                        mostrarMensagem("Nome do aluno atualizado com sucesso!", "success");
-                    }
-                }
-            });
-
-            nomeAluno.addEventListener("blur", function () {
-                nomeAluno.contentEditable = false;
-                const novoNome = nomeAluno.textContent.trim();
-                if (novoNome !== "") {
-                    editarNomeAluno(nome, novoNome);
-                    mostrarMensagem("Nome do aluno atualizado com sucesso!", "success");
-                }
-            });
         }
     });
 
@@ -161,13 +166,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Função para validar o nome do aluno
     function validarAluno(nome) {
-        
-        // Verifica se o nome não está vazio
-        if (nome.trim() === "") {
-            return false;
-        }
-    
-        return true; // Nome válido
+        return nome.trim() !== "" && !document.querySelector(`.nome-aluno[data-nome="${nome}"]`);
     }
 
     // Função para gerar um ID único
