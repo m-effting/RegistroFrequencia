@@ -188,7 +188,7 @@ tr:hover {
 }
 
 .status-button.selected {
-    border: 3px solid #ffffff; /* Borda branca para seleção */
+    border: 3px solid #5f5858; /* Borda para seleção */
     transform: scale(1.1);
 }
 
