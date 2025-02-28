@@ -1,6 +1,7 @@
 /* Importação da fonte 'Roboto' do Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
+/* Estilos globais */
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
@@ -10,7 +11,7 @@ body {
     color: #3D5675; /* Cor de texto escura para contraste */
 }
 
-/* Cabeçalho estilizado */
+/* Header */
 header {
     background-color: #3D5675;
     padding: 20px;
@@ -35,7 +36,7 @@ header h1 {
     padding: 20px;
 }
 
-/* Formulário de adição de aluno */
+/* Formulários */
 form {
     background-color: white;
     padding: 20px;
@@ -59,24 +60,12 @@ form input, form button {
     transition: all 0.3s ease;
 }
 
-
-/* Define o estilo para botão salvar chamada */
-button {
-    background-color: #7F99B2; 
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+input:focus, button:focus {
+    border-color: #a6dcf0; /* Azul claro para foco */
+    box-shadow: 0 0 5px rgba(0, 177, 243, 0.5); /* Sombra azul */
 }
 
-
-button:active {
-    transform: translateY(0);
-}
-
-/* Estilo para a tabela */
+/* Tabela */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -87,7 +76,6 @@ table {
     overflow: hidden;
 }
 
-/* Estilo das células da tabela */
 th, td {
     padding: 15px;
     text-align: center;
@@ -109,7 +97,7 @@ tr:hover {
     background-color: #f1f1f1;
 }
 
-/* Estilo para células editáveis */
+/* Células editáveis */
 .editable {
     min-width: 150px;
     max-width: 250px;
@@ -126,15 +114,50 @@ tr:hover {
     outline: none;
     color: #3D5675; /* Mantém a cor do texto ao editar */
 }
-/* Estilos para os botões de status */
+
+/* Botões */
+.btn {
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 10px 5px;
+}
+
+.btn-primario {
+    background-color: #98A1AA; 
+    color: white;
+}
+
+.btn-importar {
+    background-color: #98A1AA; 
+    color: white;
+}
+
+.btn-salvar {
+    background-color: #7eaea5; 
+    color: white;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* Botões de status */
 .status-button-container {
     display: flex;
     justify-content: center;
     margin-top: 10px;
-    gap: 5px; 
+    gap: 5px;
 }
 
-/* Estilo dos botões */
 .status-button {
     padding: 6px 12px;
     border: none;
@@ -145,7 +168,6 @@ tr:hover {
     transition: background-color 0.3s, transform 0.3s;
 }
 
-/* Botões de status */
 .status-button.p { 
     background-color: #4caf50; 
     color: white;
@@ -161,36 +183,21 @@ tr:hover {
     color: black;
 }
 
-/* Efeito de hover nos botões */
 .status-button:hover {
     opacity: 0.8;
 }
 
-/* Estilo para botão selecionado */
 .status-button.selected {
     border: 3px solid #ffffff; /* Borda branca para seleção */
     transform: scale(1.1);
 }
 
-/* Estilo para botões não selecionados */
 .status-button:not(.selected) {
     opacity: 0.5;
     filter: grayscale(50%);
 }
 
-/* Responsividade para os botões de status */
-@media (max-width: 768px) {
-    .status-button-container {
-        flex-direction: column;
-    }
-
-    .status-button {
-        width: 100%;
-        margin-bottom: 5px;
-    }
-}
-
-/* Estilo para o input de arquivo */
+/* Input de arquivo */
 input[type="file"] {
     width: 100%;
     max-width: 300px;
@@ -203,7 +210,7 @@ input[type="file"] {
     color: #3D5675; /* Texto escuro */
 }
 
-/* Estilo para a data no canto superior direito */
+/* Data no canto superior direito */
 .data-hoje {
     position: absolute;
     top: 20px;
@@ -219,7 +226,7 @@ input[type="file"] {
     z-index: 10;
 }
 
-/* Estilo para o ícone de lixeira */
+/* Ícones de ação */
 .btn-excluir {
     background: none;
     border: none;
@@ -235,7 +242,6 @@ input[type="file"] {
     color: #d32f2f; /* Vermelho mais intenso ao passar o mouse */
 }
 
-/* Estilo para o ícone de lápis */
 .btn-editar {
     background: none;
     border: none;
@@ -251,7 +257,7 @@ input[type="file"] {
     color: #0096cc; /* Azul mais intenso ao passar o mouse */
 }
 
-/* Estilo para o nome do aluno */
+/* Nome do aluno */
 .nome-aluno {
     cursor: pointer;
     transition: color 0.3s ease;
@@ -269,7 +275,7 @@ input[type="file"] {
     outline: 2px solid #00B1F3; /* Borda azul ao editar */
 }
 
-/* Rodapé estilizado */
+/* Rodapé */
 footer {
     background-color: #3D5675;
     color: white;
@@ -301,4 +307,20 @@ footer p {
 .alert-error {
     background-color: #f8d7da;
     color: #721c24;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    table, th, td {
+        font-size: 12px;
+    }
+
+    .btn, .status-button {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    .status-button-container {
+        flex-direction: column;
+    }
 }

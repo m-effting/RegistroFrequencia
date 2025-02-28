@@ -16,8 +16,15 @@ document.addEventListener("DOMContentLoaded", function () {
         let nome = document.getElementById("aluno").value.trim();
 
         if (escola !== "" && turma !== "" && nome !== "") {
-            adicionarAluno(nome, turma);
-            document.getElementById("aluno").value = "";
+            if (validarAluno(nome)) {
+                adicionarAluno(nome, turma);
+                document.getElementById("aluno").value = "";
+                mostrarMensagem("Aluno adicionado com sucesso!", "success");
+            } else {
+                mostrarMensagem("Nome do aluno é inválido.", "error");
+            }
+        } else {
+            mostrarMensagem("Preencha todos os campos.", "error");
         }
     });
 
@@ -28,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let status = event.target.classList.contains('p') ? "Presente" : 
                          event.target.classList.contains('f') ? "Falta" : "Falta Justificada";
             statusPresenca[nome] = status;
-            atualizarInterfaceStatus(nome, status);
+            atualizarStatus(nome, status);
             const botoesAluno = document.querySelectorAll(`.status-button[data-nome="${nome}"]`);
             botoesAluno.forEach(btn => btn.classList.remove('selected'));
             event.target.classList.add('selected');
@@ -39,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const nome = event.target.dataset.nome;
             if (confirm(`Tem certeza que deseja excluir o aluno ${nome}?`)) {
                 excluirAluno(nome);
+                mostrarMensagem("Aluno excluído com sucesso!", "success");
             }
         }
 
@@ -57,6 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     const novoNome = nomeAluno.textContent.trim();
                     if (novoNome !== "") {
                         editarNomeAluno(nome, novoNome);
+                        mostrarMensagem("Nome do aluno atualizado com sucesso!", "success");
                     }
                 }
             });
@@ -66,6 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const novoNome = nomeAluno.textContent.trim();
                 if (novoNome !== "") {
                     editarNomeAluno(nome, novoNome);
+                    mostrarMensagem("Nome do aluno atualizado com sucesso!", "success");
                 }
             });
         }
@@ -75,8 +85,8 @@ document.addEventListener("DOMContentLoaded", function () {
     function adicionarAluno(nome, turma) {
         let tabela = document.querySelector("table");
         let novaLinha = tabela.insertRow(-1);
-        let nomeUnico = `${nome}-${Date.now()}`; // Adiciona um timestamp para garantir unicidade
-        novaLinha.setAttribute("data-nome", nomeUnico);
+        let idUnico = gerarIdUnico(); // Gera um ID único para o aluno
+        novaLinha.setAttribute("data-nome", idUnico);
 
         let colunaNome = novaLinha.insertCell(0);
         let colunaPresenca = novaLinha.insertCell(1);
@@ -84,9 +94,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Nome do aluno com ícone de lixeira e lápis
         colunaNome.innerHTML = `
-            <span class="nome-aluno" data-nome="${nomeUnico}" contenteditable="false">${nome}</span>
-            <button class="btn-editar" data-nome="${nomeUnico}"><i class="fas fa-pencil-alt"></i></button>
-            <button class="btn-excluir" data-nome="${nomeUnico}"><i class="fas fa-trash"></i></button>
+            <span class="nome-aluno" data-nome="${idUnico}" contenteditable="false">${nome}</span>
+            <button class="btn-editar" data-nome="${idUnico}"><i class="fas fa-pencil-alt"></i></button>
+            <button class="btn-excluir" data-nome="${idUnico}"><i class="fas fa-trash"></i></button>
         `;
 
         // Botões de status
@@ -97,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let btn = document.createElement("button");
             btn.classList.add("status-button", status);
             btn.textContent = status === "p" ? "P" : status === "f" ? "F" : "FJ";
-            btn.dataset.nome = nomeUnico;
+            btn.dataset.nome = idUnico;
             statusButtonContainer.appendChild(btn);
         });
 
@@ -105,24 +115,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Célula de observação
         colunaObservacao.classList.add("editable");
-        colunaObservacao.dataset.nome = nomeUnico;
+        colunaObservacao.dataset.nome = idUnico;
         colunaObservacao.contentEditable = "true";
 
         // Inicializa o status do aluno
-        statusPresenca[nomeUnico] = "Presente";
-        atualizarInterfaceStatus(nomeUnico, "Presente");
+        statusPresenca[idUnico] = "Presente";
+        atualizarStatus(idUnico, "Presente");
     }
 
     // Função para editar o nome do aluno
     function editarNomeAluno(nomeAtual, novoNome) {
         const linha = document.querySelector(`tr[data-nome="${nomeAtual}"]`);
         if (linha) {
-            const nomeUnico = `${novoNome}-${Date.now()}`; // Novo nome com timestamp
-            linha.setAttribute("data-nome", nomeUnico);
-            linha.querySelector(".nome-aluno").dataset.nome = nomeUnico;
-            linha.querySelector(".btn-editar").dataset.nome = nomeUnico;
-            linha.querySelector(".btn-excluir").dataset.nome = nomeUnico;
-            statusPresenca[nomeUnico] = statusPresenca[nomeAtual];
+            const idUnico = gerarIdUnico(); // Novo ID único
+            linha.setAttribute("data-nome", idUnico);
+            linha.querySelector(".nome-aluno").dataset.nome = idUnico;
+            linha.querySelector(".btn-editar").dataset.nome = idUnico;
+            linha.querySelector(".btn-excluir").dataset.nome = idUnico;
+            statusPresenca[idUnico] = statusPresenca[nomeAtual];
             delete statusPresenca[nomeAtual];
         }
     }
@@ -136,8 +146,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Função para atualizar a interface com base no status
-    function atualizarInterfaceStatus(nome, status) {
+    // Função para atualizar o status de presença
+    function atualizarStatus(nome, status) {
         const botoesAluno = document.querySelectorAll(`.status-button[data-nome="${nome}"]`);
         botoesAluno.forEach(btn => {
             btn.classList.remove('selected');
@@ -147,5 +157,30 @@ document.addEventListener("DOMContentLoaded", function () {
                 btn.classList.add('selected');
             }
         });
+    }
+
+    // Função para validar o nome do aluno
+    function validarAluno(nome) {
+        
+        // Verifica se o nome não está vazio
+        if (nome.trim() === "") {
+            return false;
+        }
+    
+        return true; // Nome válido
+    }
+
+    // Função para gerar um ID único
+    function gerarIdUnico() {
+        return `aluno-${Date.now()}`;
+    }
+
+    // Função para mostrar mensagens de feedback
+    function mostrarMensagem(mensagem, tipo) {
+        const div = document.createElement("div");
+        div.className = `alert alert-${tipo}`;
+        div.textContent = mensagem;
+        document.body.appendChild(div);
+        setTimeout(() => div.remove(), 3000);
     }
 });
