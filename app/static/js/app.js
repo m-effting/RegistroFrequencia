@@ -112,6 +112,13 @@ function adicionarAluno(nome, turma) {
         btn.classList.add("status-button", status);
         btn.textContent = status.toUpperCase(); // Garante que o texto seja maiúsculo
         btn.dataset.nome = idUnico;
+        btn.addEventListener("click", function (event) {
+            event.preventDefault(); // Evita a submissão do formulário
+            let nome = btn.dataset.nome;
+            let status = btn.classList.contains('p') ? "Presente" : 
+                         btn.classList.contains('f') ? "Falta" : "Falta Justificada";
+            marcarPresenca(nome, status);
+        });
         statusButtonContainer.appendChild(btn);
     });
 
