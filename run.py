@@ -1,12 +1,6 @@
-import os
-from flask import send_from_directory
-from app import app
+from app import create_app
 
-# Rota para servir arquivos estáticos
-@app.route('/static/<path:filename>')
-def serve_static(filename):
-    return send_from_directory(os.path.join(app.root_path, 'static'), filename)
+app = create_app()
 
-# Inicialização do servidor Flask
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000)

@@ -1,28 +1,21 @@
-import os
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from config import Config
 
-# Inicialização do aplicativo Flask
-app = Flask(__name__)
+db = SQLAlchemy()
 
-# Configurações do aplicativo
-def configurar_app(app):
-    # Configuração do diretório de uploads
-    UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
-    if not os.path.exists(UPLOAD_FOLDER):
-        os.makedirs(UPLOAD_FOLDER)
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(Config)
 
-    # Configuração do diretório de histórico de chamadas
-    HISTORICO_CHAMADAS_FOLDER = os.path.join(os.getcwd(), 'historico_chamadas')
-    if not os.path.exists(HISTORICO_CHAMADAS_FOLDER):
-        os.makedirs(HISTORICO_CHAMADAS_FOLDER)
+    db.init_app(app)
 
-    # Definindo configurações do app
-    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-    app.config['HISTORICO_CHAMADAS_FOLDER'] = HISTORICO_CHAMADAS_FOLDER
-    app.config['SECRET_KEY'] = 'chave_secreta_para_sessao'  # Chave secreta para sessões
+    # Registrar blueprints (rotas)
+    from app.routes import main_bp
+    app.register_blueprint(main_bp)
 
-# Configurar o app
-configurar_app(app)
+    # Criar tabelas do banco de dados
+    with app.app_context():
+        db.create_all()
 
-# Importação das rotas (deve ser feita no final para evitar importação circular)
-from app import routes
+    return app
