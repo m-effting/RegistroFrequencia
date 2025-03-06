@@ -31,34 +31,40 @@
 
         <hr>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Presença</th>
-                    <th>Observação</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for aluno in alunos %}
-                    <tr data-nome="{{ aluno.nome }}">
-                        <td>
-                            <span class="nome-aluno" data-nome="{{ aluno.nome }}" contenteditable="false">{{ aluno.nome }}</span>
-                            <button class="btn-editar" data-nome="{{ aluno.nome }}"><i class="fas fa-pencil-alt"></i></button>
-                            <button class="btn-excluir" data-nome="{{ aluno.nome }}"><i class="fas fa-trash"></i></button>
-                        </td>
-                        <td>
-                            <div class="status-button-container">
-                                <button class="status-button p" data-nome="{{ aluno.nome }}"><i class="fas fa-check"></i> P</button>
-                                <button class="status-button f" data-nome="{{ aluno.nome }}"><i class="fas fa-times"></i> F</button>
-                                <button class="status-button fj" data-nome="{{ aluno.nome }}"><i class="fas fa-exclamation"></i> FJ</button>
-                            </div>
-                        </td>
-                        <td class="editable" contenteditable="true" data-nome="{{ aluno.nome }}"></td>
+        <!-- Formulário para salvar a chamada -->
+        <form id="formSalvarChamada" action="{{ url_for('main.save') }}" method="post">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Presença</th>
+                        <th>Observação</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for aluno in alunos %}
+                        <tr data-nome="{{ aluno.nome }}">
+                            <td>
+                                <span class="nome-aluno" data-nome="{{ aluno.nome }}" contenteditable="false">{{ aluno.nome }}</span>
+                                <button class="btn-editar" data-nome="{{ aluno.nome }}"><i class="fas fa-pencil-alt"></i></button>
+                                <button class="btn-excluir" data-nome="{{ aluno.nome }}"><i class="fas fa-trash"></i></button>
+                            </td>
+                            <td>
+                                <div class="status-button-container">
+                                    <button type="button" class="status-button p" data-nome="{{ aluno.nome }}" onclick="marcarPresenca('{{ aluno.nome }}', 'Presente')"><i class="fas fa-check"></i> P</button>
+                                    <button type="button" class="status-button f" data-nome="{{ aluno.nome }}" onclick="marcarPresenca('{{ aluno.nome }}', 'Falta')"><i class="fas fa-times"></i> F</button>
+                                    <button type="button" class="status-button fj" data-nome="{{ aluno.nome }}" onclick="marcarPresenca('{{ aluno.nome }}', 'Falta Justificada')"><i class="fas fa-exclamation"></i> FJ</button>
+                                    <input type="hidden" id="status_{{ aluno.nome }}" name="status_{{ aluno.nome }}" value="">
+                                </div>
+                            </td>
+                            <td class="editable" contenteditable="true" data-nome="{{ aluno.nome }}" oninput="atualizarObservacao('{{ aluno.nome }}')"></td>
+                            <input type="hidden" id="observacao_{{ aluno.nome }}" name="observacao_{{ aluno.nome }}" value="">
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-salvar"><i class="fas fa-save"></i> Salvar Chamada</button>
+        </form>
 
         <hr>
 
@@ -66,8 +72,6 @@
             <input type="file" name="file" accept=".pdf">
             <button type="submit" class="btn btn-importar"><i class="fas fa-file-import"></i> Importar Chamada</button>
         </form>
-        
-        <button id="btnSalvarChamada" class="btn btn-salvar"><i class="fas fa-save"></i> Salvar Chamada</button>
 
         <!-- Botão de limpar tabela -->
         <form action="{{ url_for('main.limpar_tabela') }}" method="post">
@@ -82,5 +86,25 @@
     </footer>
 
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script>
+        function marcarPresenca(nome, status) {
+            // Atualiza o valor do input oculto com o status selecionado
+            document.getElementById(`status_${nome}`).value = status;
+
+            // Remove a classe 'selected' de todos os botões de status do aluno
+            const botoes = document.querySelectorAll(`.status-button[data-nome="${nome}"]`);
+            botoes.forEach(botao => botao.classList.remove('selected'));
+
+            // Adiciona a classe 'selected' ao botão clicado
+            const botaoClicado = document.querySelector(`.status-button[data-nome="${nome}"].${status === 'Presente' ? 'p' : status === 'Falta' ? 'f' : 'fj'}`);
+            botaoClicado.classList.add('selected');
+        }
+
+        function atualizarObservacao(nome) {
+            // Atualiza o valor do input oculto com a observação digitada
+            const observacao = document.querySelector(`.editable[data-nome="${nome}"]`).textContent;
+            document.getElementById(`observacao_${nome}`).value = observacao;
+        }
+    </script>
 </body>
 </html>
