@@ -151,7 +151,7 @@ tr:hover {
 }
 
 .btn-limpar {
-    background-color: #ff4d4d; /* Vermelho */
+    background-color: #ff4d4d; 
     color: white;
     margin-top: 20px;
     padding: 10px 20px;
@@ -177,10 +177,11 @@ tr:hover {
     padding: 6px 12px;
     border: none;
     border-radius: 5px;
-    font-size: 12px;
+    font-size: 14px;
     cursor: pointer;
     width: auto;
     transition: background-color 0.3s, transform 0.3s;
+    text-transform: uppercase; /* Garante que o texto seja maiúsculo */
 }
 
 .status-button.p { 
@@ -221,11 +222,11 @@ input[type="file"] {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    background-color: #dde4eb; /* Fundo claro */
+    background-color: #dde4eb; 
     color: #3D5675; /* Texto escuro */
 }
 
-/* Data no canto superior direito */
+
 .data-hoje {
     position: absolute;
     top: 20px;
@@ -245,7 +246,7 @@ input[type="file"] {
 .btn-excluir {
     background: none;
     border: none;
-    color: #f44336; /* Vermelho suave */
+    color: #f44336; 
     cursor: pointer;
     margin-left: 10px;
     font-size: 14px;
@@ -260,7 +261,7 @@ input[type="file"] {
 .btn-editar {
     background: none;
     border: none;
-    color: #00B1F3; /* Azul claro */
+    color: #00B1F3; 
     cursor: pointer;
     margin-left: 10px;
     font-size: 14px;
@@ -272,7 +273,7 @@ input[type="file"] {
     color: #0096cc; /* Azul mais intenso ao passar o mouse */
 }
 
-/* Nome do aluno */
+
 .nome-aluno {
     cursor: pointer;
     transition: color 0.3s ease;

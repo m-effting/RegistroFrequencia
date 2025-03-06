@@ -86,47 +86,61 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Função para adicionar aluno
-    function adicionarAluno(nome, turma) {
-        let tabela = document.querySelector("table");
-        let novaLinha = tabela.insertRow(-1);
-        let idUnico = gerarIdUnico(); // Gera um ID único para o aluno
-        novaLinha.setAttribute("data-nome", idUnico);
+function adicionarAluno(nome, turma) {
+    let tabela = document.querySelector("table");
+    let novaLinha = tabela.insertRow(-1);
+    let idUnico = gerarIdUnico(); // Gera um ID único para o aluno
+    novaLinha.setAttribute("data-nome", idUnico);
 
-        let colunaNome = novaLinha.insertCell(0);
-        let colunaPresenca = novaLinha.insertCell(1);
-        let colunaObservacao = novaLinha.insertCell(2);
+    let colunaNome = novaLinha.insertCell(0);
+    let colunaPresenca = novaLinha.insertCell(1);
+    let colunaObservacao = novaLinha.insertCell(2);
 
-        // Nome do aluno com ícone de lixeira e lápis
-        colunaNome.innerHTML = `
-            <span class="nome-aluno" data-nome="${idUnico}" contenteditable="false">${nome}</span>
-            <button type="button" class="btn-editar" data-nome="${idUnico}"><i class="fas fa-pencil-alt"></i></button>
-            <button type="button" class="btn-excluir" data-nome="${idUnico}"><i class="fas fa-trash"></i></button>
-        `;
+    // Nome do aluno com ícone de lixeira e lápis
+    colunaNome.innerHTML = `
+        <span class="nome-aluno" data-nome="${idUnico}" contenteditable="false">${nome}</span>
+        <button type="button" class="btn-editar" data-nome="${idUnico}"><i class="fas fa-pencil-alt"></i></button>
+        <button type="button" class="btn-excluir" data-nome="${idUnico}"><i class="fas fa-trash"></i></button>
+    `;
 
-        // Botões de status
-        let statusButtonContainer = document.createElement("div");
-        statusButtonContainer.classList.add("status-button-container");
+    // Botões de status
+    let statusButtonContainer = document.createElement("div");
+    statusButtonContainer.classList.add("status-button-container");
 
-        ["p", "f", "fj"].forEach(status => {
-            let btn = document.createElement("button");
-            btn.classList.add("status-button", status);
-            btn.textContent = status === "p" ? "P" : status === "f" ? "F" : "FJ";
-            btn.dataset.nome = idUnico;
-            statusButtonContainer.appendChild(btn);
-        });
+    ["p", "f", "fj"].forEach(status => {
+        let btn = document.createElement("button");
+        btn.classList.add("status-button", status);
+        btn.textContent = status.toUpperCase(); // Garante que o texto seja maiúsculo
+        btn.dataset.nome = idUnico;
+        statusButtonContainer.appendChild(btn);
+    });
 
-        colunaPresenca.appendChild(statusButtonContainer);
+    colunaPresenca.appendChild(statusButtonContainer);
 
-        // Célula de observação
-        colunaObservacao.classList.add("editable");
-        colunaObservacao.dataset.nome = idUnico;
-        colunaObservacao.contentEditable = "true";
-        colunaObservacao.addEventListener("input", () => atualizarObservacao(idUnico));
+    // Célula de observação
+    colunaObservacao.classList.add("editable");
+    colunaObservacao.dataset.nome = idUnico;
+    colunaObservacao.contentEditable = "true";
+    colunaObservacao.addEventListener("input", () => atualizarObservacao(idUnico));
 
-        // Inicializa o status do aluno
-        statusPresenca[idUnico] = "Presente";
-        marcarPresenca(idUnico, "Presente");
-    }
+    // Inicializa o status do aluno como "Presente" e seleciona o botão "P"
+    statusPresenca[idUnico] = "Presente";
+    marcarPresenca(idUnico, "Presente");
+}
+
+// Função para marcar presença
+function marcarPresenca(nome, status) {
+    // Atualiza o valor do input oculto com o status selecionado
+    document.getElementById(`status_${nome}`).value = status;
+
+    // Remove a classe 'selected' de todos os botões de status do aluno
+    const botoes = document.querySelectorAll(`.status-button[data-nome="${nome}"]`);
+    botoes.forEach(botao => botao.classList.remove('selected'));
+
+    // Adiciona a classe 'selected' ao botão clicado
+    const botaoClicado = document.querySelector(`.status-button[data-nome="${nome}"].${status === 'Presente' ? 'p' : status === 'Falta' ? 'f' : 'fj'}`);
+    botaoClicado.classList.add('selected');
+}
 
     // Função para editar o nome do aluno
     function editarNomeAluno(nomeAtual, novoNome) {
