@@ -150,6 +150,21 @@ tr:hover {
     transform: translateY(0);
 }
 
+.btn-limpar {
+    background-color: #ff4d4d; /* Vermelho */
+    color: white;
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-limpar:hover {
+    background-color: #cc0000; /* Vermelho mais escuro ao passar o mouse */
+}
+
 /* Botões de status */
 .status-button-container {
     display: flex;

@@ -18,8 +18,10 @@ def extract_names_from_pdf(file):
         # Encontrar todas as correspondências da regex no texto
         matches = nome_regex.findall(text)
         for match in matches:
-            # Remover espaços extras e adicionar o nome à lista
-            nome = match.strip()
-            names.append(nome)
+            # Ignorar linhas que contenham palavras do cabeçalho
+            if not any(word in match for word in ["Código", "Nome", "CEP"]):
+                # Remover espaços extras e adicionar o nome à lista
+                nome = match.strip()
+                names.append(nome)
 
     return names

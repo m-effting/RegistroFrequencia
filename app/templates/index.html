@@ -68,6 +68,13 @@
         </form>
         
         <button id="btnSalvarChamada" class="btn btn-salvar"><i class="fas fa-save"></i> Salvar Chamada</button>
+
+        <!-- Botão de limpar tabela -->
+        <form action="{{ url_for('main.limpar_tabela') }}" method="post">
+            <button type="submit" class="btn btn-limpar" onclick="return confirm('Tem certeza que deseja limpar a tabela de alunos?');">
+                <i class="fas fa-trash"></i> Limpar Tabela de Alunos
+            </button>
+        </form>
     </div>
 
     <footer>

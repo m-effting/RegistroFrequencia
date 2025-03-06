@@ -68,3 +68,16 @@ def export():
     presencas = Presenca.query.all()
     output = generate_excel(presencas)
     return send_file(output, as_attachment=True, download_name='presenca.xlsx')
+
+@main_bp.route('/limpar_tabela', methods=['POST'])
+def limpar_tabela():
+    try:
+        # Limpa a tabela de alunos
+        Aluno.query.delete()
+        db.session.commit()
+        flash('Tabela de alunos limpa com sucesso!', 'success')
+    except Exception as e:
+        print(f"Erro ao limpar a tabela de alunos: {e}")
+        flash('Erro ao limpar a tabela de alunos.', 'error')
+    
+    return redirect(url_for('main.index'))
