@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("click", function (event) {
         // Editar nome do aluno
         if (event.target.classList.contains("btn-editar") || event.target.closest(".btn-editar")) {
+            event.preventDefault(); // Evita a submissão do formulário
             const btnEditar = event.target.classList.contains("btn-editar") ? event.target : event.target.closest(".btn-editar");
             const nome = btnEditar.dataset.nome;
             const nomeAluno = document.querySelector(`.nome-aluno[data-nome="${nome}"]`);
@@ -65,6 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Excluir aluno
         if (event.target.classList.contains("btn-excluir") || event.target.closest(".btn-excluir")) {
+            event.preventDefault(); // Evita a submissão do formulário
             const btnExcluir = event.target.classList.contains("btn-excluir") ? event.target : event.target.closest(".btn-excluir");
             const nome = btnExcluir.dataset.nome;
             if (confirm(`Tem certeza que deseja excluir o aluno ${nome}?`)) {
@@ -75,6 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Alterar status de presença
         if (event.target.classList.contains("status-button")) {
+            event.preventDefault(); // Evita a submissão do formulário
             let nome = event.target.dataset.nome;
             let status = event.target.classList.contains('p') ? "Presente" : 
                          event.target.classList.contains('f') ? "Falta" : "Falta Justificada";
@@ -96,8 +99,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // Nome do aluno com ícone de lixeira e lápis
         colunaNome.innerHTML = `
             <span class="nome-aluno" data-nome="${idUnico}" contenteditable="false">${nome}</span>
-            <button class="btn-editar" data-nome="${idUnico}"><i class="fas fa-pencil-alt"></i></button>
-            <button class="btn-excluir" data-nome="${idUnico}"><i class="fas fa-trash"></i></button>
+            <button type="button" class="btn-editar" data-nome="${idUnico}"><i class="fas fa-pencil-alt"></i></button>
+            <button type="button" class="btn-excluir" data-nome="${idUnico}"><i class="fas fa-trash"></i></button>
         `;
 
         // Botões de status
